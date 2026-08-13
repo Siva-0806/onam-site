@@ -665,11 +665,88 @@ h1, h2, h3, h4 {
 .events__head {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 26px;
-  margin-bottom: clamp(34px,5vw,56px);
+  gap: 28px;
+  margin-bottom: clamp(34px, 5vw, 56px);
 }
+
+/* Highlighted Event Lead Callout */
+.events__callout {
+  max-width: 530px;
+  background: linear-gradient(135deg, rgba(46, 26, 78, 0.65) 0%, rgba(24, 11, 44, 0.9) 100%);
+  border: 1px solid rgba(232, 180, 79, 0.35);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 14px 36px -12px rgba(0, 0, 0, 0.7), 0 0 24px rgba(124, 63, 228, 0.16);
+  position: relative;
+  overflow: hidden;
+}
+.events__callout::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--gold) 0%, #F08A3C 50%, var(--lavender) 100%);
+}
+.events__callout-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.events__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(232, 180, 79, 0.12);
+  border: 1px solid rgba(232, 180, 79, 0.35);
+  border-radius: 999px;
+  padding: 3px 11px;
+}
+.events__pill-dot {
+  width: 6.5px; height: 6.5px;
+  border-radius: 50%;
+  background: #4ADE80;
+  box-shadow: 0 0 8px #4ADE80;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+.events__pill-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  font-weight: 500;
+}
+.events__callout-main {
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--cream);
+  margin-bottom: 7px;
+}
+.events__callout-main strong {
+  font-weight: 600;
+  color: #FFF3A3;
+  letter-spacing: -0.01em;
+}
+.events__callout-sub {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--on-ink-soft);
+  margin: 0;
+}
+
 .events__grid {
   display: grid;
   grid-template-columns: repeat(2,minmax(0,1fr));

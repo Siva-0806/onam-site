@@ -6,9 +6,17 @@ function useReveal(ref) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (!('IntersectionObserver' in window)) { el.classList.add('is-in'); return; }
+    if (!('IntersectionObserver' in window)) {
+      el.classList.add('is-in');
+      return;
+    }
     const io = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('is-in'); io.unobserve(el); } },
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('is-in');
+          io.unobserve(el);
+        }
+      },
       { rootMargin: '0px 0px -12% 0px', threshold: 0.08 }
     );
     io.observe(el);
@@ -19,7 +27,11 @@ function useReveal(ref) {
 function EventCard({ event, onRegister }) {
   const ref = useRef(null);
   useReveal(ref);
-  const sealHtml = seal({ counts: event.seal.rings, hue: event.seal.hue, label: `${event.name} emblem` });
+  const sealHtml = seal({
+    counts: event.seal.rings,
+    hue: event.seal.hue,
+    label: `${event.name} emblem`,
+  });
 
   return (
     <article className="card rev" ref={ref}>
@@ -37,7 +49,9 @@ function EventCard({ event, onRegister }) {
       <p className="card__text">{event.teaser}</p>
       <div className="card__tags">
         {event.tags.map((t) => (
-          <span key={t} className="tag">{t}</span>
+          <span key={t} className="tag">
+            {t}
+          </span>
         ))}
       </div>
       <div className="card__foot">
@@ -45,7 +59,10 @@ function EventCard({ event, onRegister }) {
         <a
           className="btn btn--ghost"
           href={`#/register/${event.id}`}
-          onClick={(e) => { e.preventDefault(); onRegister(event.id); }}
+          onClick={(e) => {
+            e.preventDefault();
+            onRegister(event.id);
+          }}
         >
           Click here to register <span className="btn__arrow">→</span>
         </a>
@@ -65,13 +82,26 @@ export default function EventsSection({ onNavigate }) {
       <div className="wrap">
         <div className="events__head rev" ref={headRef}>
           <div>
-            <p className="eyebrow">The four events</p>
+            <p className="eyebrow">The Four Events</p>
             <h2 className="sect__title">Four ways to spend the morning.</h2>
           </div>
-          <p className="sect__lead">
-            Two run before the break, two after. Every event has its own registration
-            form — pick the one you want and take your team in.
-          </p>
+
+          {/* Catchy & Styled Highlighted Callout Box */}
+          <div className="events__callout">
+            <div className="events__callout-top">
+              <span className="events__pill">
+                <span className="events__pill-dot" />
+                Slot 1 &amp; Slot 2
+              </span>
+              <span className="events__pill-tag">⚡ 4 Arenas · 1 Morning</span>
+            </div>
+            <p className="events__callout-main">
+              <strong>Two showdowns before the break, two high-voltage battles after.</strong>
+            </p>
+            <p className="events__callout-sub">
+              Every event is its own arena with a dedicated registration form — pick your battlefield, rally your squad, and claim the Onam championship!
+            </p>
+          </div>
         </div>
 
         <div className="events__grid">
