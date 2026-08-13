@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TECHAVAM 2026 — Technocrats | IT Department Onam Celebration</title>
+<meta name="description" content="TECHAVAM 2026 is the IT Department's Onam celebration by Technocrats. Four events: Startup Maveli, Digital Pookolam, Tech + Kerala Amazing Race and Code Questers.">
+<meta name="theme-color" content="#180B2C">
+
+<!-- ==========================================================================
+     TECHAVAM 2026 — SINGLE FILE BUILD
+     Everything (styles, scripts, QR library) is inside this one file.
+
+     TO SET IT UP, SEARCH THIS FILE FOR:
+       FORM_LINKS   → paste your four Google Form URLs
+       FEST         → date, venue, coordinator contact
+       CLUB         → the official Technocrats introduction
+       CLUB LOGO    → two spots to drop your logo image
+
+     The registration page is reached at #/register and has its own URL, so the
+     browser back button works. Fonts load from Google Fonts.
+     ====================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- 1. TOKENS ---------------------------------------------------- */
+:root {
+  /* colour */
+  --ink:        #180B2C;   /* deep aubergine ground */
+  --ink-2:      #21123B;   /* raised surface */
+  --ink-3:      #2E1A4E;   /* hover / border on dark */
+  --violet:     #7C3FE4;   /* interactive */
+  --violet-dim: #4A2490;
+  --lavender:   #C7ADF0;
+  --gold:       #E8B44F;   /* kasavu zari */
+  --gold-deep:  #A9761F;
+  --cream:      #F8F0DF;   /* cloth */
+  --cream-2:    #EFE3CB;
+  --marigold:   #F08A3C;   /* pookalam accent, used sparingly */
+
+  --on-ink:      #F8F0DF;
+  --on-ink-soft: rgba(248, 240, 223, .68);
+  --on-cream:      #2A1440;
+  --on-cream-soft: rgba(42, 20, 64, .70);
+
+  /* type */
+  --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --body:    "Instrument Sans", system-ui, -apple-system, sans-serif;
+  --mono:    "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+  /* layout */
+  --frame: 14px;              /* page-edge kasavu border inset */
+  --wrap: 1180px;
+  --gut: clamp(20px, 5vw, 56px);
+  --r: 4px;                   /* borders stay crisp — cloth, not bubbles */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+/* ---------- 2. RESET / BASE --------------------------------------------- */
+* { box-sizing: border-box; }
+
+/* scroll-behavior is applied per-jump by the router below */
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; cursor: pointer; }
+
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.028em;
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- 3. THE KASAVU FRAME (signature) ------------------------------
+   Two gold hairlines inset from the viewport edge — the gold border of a
+   Kerala mundu, wrapped around the whole page.                            */
+.frame {
+  position: fixed;
+  inset: var(--frame);
+  border: 1px solid rgba(232, 180, 79, .45);
+  pointer-events: none;
+  z-index: 90;
+}
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(232, 180, 79, .18);
+}
+.frame__mark {
+  position: absolute;
+  width: 7px; height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.frame__mark--tl { top: -4px;    left: -4px; }
+.frame__mark--tr { top: -4px;    right: -4px; }
+.frame__mark--bl { bottom: -4px; left: -4px; }
+.frame__mark--br { bottom: -4px; right: -4px; }
+
+/* ---------- 4. NAV ------------------------------------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  background: rgba(24, 11, 44, .82);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border-bottom: 1px solid rgba(232, 180, 79, .16);
+}
+.nav__in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 68px;
+}
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand__seal { width: 34px; height: 34px; flex: none; }
+.brand__txt { display: flex; flex-direction: column; line-height: 1; }
+.brand__name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: .02em;
+}
+.brand__sub {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 4px;
+}
+
+.nav__links { display: flex; align-items: center; gap: 30px; }
+.nav__link {
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--on-ink-soft);
+  padding: 6px 0;
+  position: relative;
+  transition: color .25s var(--ease);
+}
+.nav__link:hover { color: var(--cream); }
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width .3s var(--ease);
+}
+.nav__link:hover::after { width: 100%; }
+
+.nav__toggle {
+  display: none;
+  background: none;
+  border: 1px solid rgba(232, 180, 79, .32);
+  color: var(--cream);
+  width: 42px; height: 38px;
+  border-radius: var(--r);
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+.nav__toggle span,
+.nav__toggle span::before,
+.nav__toggle span::after {
+  display: block;
+  width: 17px; height: 1.5px;
+  background: var(--cream);
+  transition: transform .3s var(--ease), opacity .2s;
+}
+.nav__toggle span::before,
+.nav__toggle span::after { content: ""; position: absolute; }
+.nav__toggle span::before { transform: translateY(-5.5px); }
+.nav__toggle span::after  { transform: translateY(5.5px); }
+.nav.is-open .nav__toggle span { background: transparent; }
+.nav.is-open .nav__toggle span::before { transform: rotate(45deg); }
+.nav.is-open .nav__toggle span::after  { transform: rotate(-45deg); }
+
+/* ---------- 5. BUTTONS --------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: var(--r);
+  border: 1px solid transparent;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .22s var(--ease), background .25s, color .25s, border-color .25s, box-shadow .25s;
+}
+.btn__arrow { transition: transform .3s var(--ease); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+.btn--gold {
+  background: var(--gold);
+  color: #24130A;
+  font-weight: 600;
+  box-shadow: 0 0 0 0 rgba(232, 180, 79, .5);
+}
+.btn--gold:hover {
+  background: #F2C56B;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -12px rgba(232, 180, 79, .75);
+}
+
+.btn--ghost {
+  border-color: rgba(232, 180, 79, .38);
+  color: var(--cream);
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+  background: rgba(232, 180, 79, .09);
+  transform: translateY(-2px);
+}
+
+.btn--onCream {
+  border-color: rgba(42, 20, 64, .28);
+  color: var(--on-cream);
+}
+.btn--onCream:hover {
+  border-color: var(--on-cream);
+  background: rgba(42, 20, 64, .06);
+  transform: translateY(-2px);
+}
+
+.btn[aria-disabled="true"],
+.btn:disabled {
+  opacity: .5;
+  pointer-events: none;
+  filter: grayscale(.4);
+}
+
+/* ---------- 6. SECTION FURNITURE ---------------------------------------- */
+.sect { padding-block: clamp(72px, 10vw, 128px); position: relative; }
+.sect--cream {
+  background: var(--cream);
+  color: var(--on-cream);
+}
+.sect--cream h1, .sect--cream h2, .sect--cream h3 { color: var(--on-cream); }
+
+/* the kasavu band: a woven gold strip that separates cloth from night */
+.band {
+  height: 22px;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--gold-deep) 0 1px,
+      transparent 1px 9px),
+    linear-gradient(180deg, var(--gold) 0%, #C99231 100%);
+  border-block: 1px solid rgba(24, 11, 44, .35);
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.eyebrow::before {
+  content: "";
+  width: 26px; height: 1px;
+  background: currentColor;
+  flex: none;
+}
+.sect--cream .eyebrow { color: var(--gold-deep); }
+
+.sect__title {
+  font-size: clamp(34px, 5.2vw, 60px);
+  max-width: 18ch;
+}
+.sect__lead {
+  margin-top: 20px;
+  max-width: 56ch;
+  color: var(--on-ink-soft);
+  font-size: clamp(16px, 1.6vw, 18.5px);
+}
+.sect--cream .sect__lead { color: var(--on-cream-soft); }
+
+/* ---------- 7. HERO ------------------------------------------------------ */
+.hero {
+  position: relative;
+  padding-top: clamp(48px, 7vw, 84px);
+  padding-bottom: clamp(56px, 8vw, 100px);
+  overflow: hidden;
+}
+.hero::before {                       /* lamplight behind the pookalam */
+  content: "";
+  position: absolute;
+  top: -18%; right: -8%;
+  width: min(760px, 88vw);
+  aspect-ratio: 1;
+  background: radial-gradient(circle,
+    rgba(124, 63, 228, .30) 0%,
+    rgba(124, 63, 228, .10) 42%,
+    transparent 68%);
+  pointer-events: none;
+}
+.hero__in {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+.hero__kicker {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-bottom: 26px;
+}
+.hero__title {
+  font-size: clamp(56px, 11.2vw, 132px);
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: .88;
+}
+.hero__title em {
+  font-style: normal;
+  display: block;
+  color: var(--gold);
+}
+.hero__rule {
+  margin: 26px 0 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.hero__rule i { font-style: normal; color: var(--gold); }
+.hero__sub {
+  max-width: 46ch;
+  color: var(--on-ink-soft);
+  font-size: clamp(16px, 1.7vw, 18.5px);
+}
+.hero__cta {
+  margin-top: 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.hero__meta {
+  margin-top: 38px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+}
+.hero__meta b { color: var(--cream); font-weight: 500; }
+
+.hero__art { position: relative; display: grid; place-items: center; }
+.pookalam { width: min(100%, 480px); height: auto; }
+.hero__caption {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(248, 240, 223, .42);
+  text-align: center;
+}
+
+/* ---------- 8. MARQUEE (the seven themes of the fest) -------------------- */
+.strip {
+  border-block: 1px solid rgba(232, 180, 79, .18);
+  background: rgba(46, 26, 78, .35);
+  overflow: hidden;
+  padding-block: 15px;
+}
+.strip__track {
+  display: flex;
+  gap: 44px;
+  width: max-content;
+  animation: slide 34s linear infinite;
+}
+.strip__track span {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+  white-space: nowrap;
+}
+.strip__track b { color: var(--gold); font-weight: 400; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ---------- 9. ABOUT ----------------------------------------------------- */
+.about__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 76px);
+  align-items: start;
+}
+.about__body p { margin: 0 0 18px; color: var(--on-cream-soft); }
+.about__body p:first-child { color: var(--on-cream); font-size: 19px; }
+
+.plaque {
+  border: 1px solid rgba(42, 20, 64, .18);
+  background: var(--cream-2);
+  padding: 30px;
+  position: relative;
+}
+.plaque::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(169, 118, 31, .32);
+  pointer-events: none;
+}
+.plaque__logo {
+  width: 92px; height: 92px;
+  border: 1px dashed rgba(42, 20, 64, .35);
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-align: center;
+  color: var(--on-cream-soft);
+  padding: 8px;
+}
+.plaque__name { font-size: 30px; }
+.plaque__role {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-top: 10px;
+}
+.plaque__list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(42, 20, 64, .14);
+}
+.plaque__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(42, 20, 64, .10);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+.plaque__list span { color: var(--on-cream-soft); text-transform: uppercase; font-size: 10.5px; letter-spacing: .16em; }
+.plaque__list b { font-weight: 500; text-align: right; }
+
+/* ---------- 10. EVENT CARDS ---------------------------------------------- */
+.events__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 26px;
+  margin-bottom: clamp(34px, 5vw, 56px);
+}
+.events__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 32px 30px;
+  background: linear-gradient(165deg, var(--ink-2) 0%, rgba(24, 11, 44, .9) 100%);
+  border: 1px solid rgba(232, 180, 79, .16);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: transform .35s var(--ease), border-color .35s, box-shadow .35s;
+}
+.card::before {                      /* petal-light that wakes on hover */
+  content: "";
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(124, 63, 228, .40), transparent 70%);
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+  pointer-events: none;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(232, 180, 79, .5);
+  box-shadow: 0 26px 60px -34px rgba(0, 0, 0, .9);
+}
+.card:hover::before { opacity: 1; }
+
+.card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+.card__slot {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(232, 180, 79, .3);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+.card__seal { width: 68px; height: 68px; flex: none; }
+.card__name { font-size: clamp(26px, 3vw, 34px); position: relative; }
+.card__tagline {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-top: 12px;
+}
+.card__text {
+  margin: 18px 0 24px;
+  color: var(--on-ink-soft);
+  font-size: 15.5px;
+  position: relative;
+}
+.card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--on-ink-soft);
+  border: 1px solid rgba(199, 173, 240, .26);
+  border-radius: 999px;
+  padding: 5px 11px;
+}
+.card__foot {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(232, 180, 79, .14);
+  position: relative;
+}
+.card__time {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--on-ink-soft);
+}
+
+/* ---------- 11. PARTICIPATION + SCHEDULE --------------------------------- */
+.rules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 46px;
+}
+.rule {
+  border: 1px solid rgba(42, 20, 64, .16);
+  background: #FDF8EE;
+  padding: 26px 24px;
+}
+.rule__n {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .22em;
+  color: var(--gold-deep);
+  text-transform: uppercase;
+}
+.rule__t { font-size: 22px; margin: 12px 0 8px; }
+.rule__d { color: var(--on-cream-soft); font-size: 15px; margin: 0; }
+
+.sched { margin-top: 54px; }
+.sched__row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  padding: 20px 0;
+  border-top: 1px solid rgba(232, 180, 79, .18);
+}
+.sched__row:last-child { border-bottom: 1px solid rgba(232, 180, 79, .18); }
+.sched__label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.sched__time {
+  font-family: var(--display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  margin: 0;
+}
+.sched__what { color: var(--on-ink-soft); font-size: 14.5px; margin: 4px 0 0; }
+.sched__row--break .sched__label { color: var(--on-ink-soft); }
+.sched__row--break .sched__time { opacity: .5; font-weight: 400; }
+
+/* the same schedule sitting on cloth instead of night */
+.sect--cream .sched__row { border-top-color: rgba(42, 20, 64, .16); }
+.sect--cream .sched__row:last-child { border-bottom-color: rgba(42, 20, 64, .16); }
+.sect--cream .sched__label { color: var(--gold-deep); }
+.sect--cream .sched__what { color: var(--on-cream-soft); }
+.sect--cream .sched__row--break .sched__label { color: var(--on-cream-soft); }
+
+/* ---------- 12. CLOSING CTA + FOOTER ------------------------------------- */
+.close {
+  text-align: center;
+  padding-block: clamp(80px, 11vw, 140px);
+  position: relative;
+  overflow: hidden;
+}
+.close__title { font-size: clamp(38px, 7vw, 84px); max-width: none; }
+.close__sub { color: var(--on-ink-soft); margin: 20px auto 34px; max-width: 44ch; }
+
+.foot {
+  border-top: 1px solid rgba(232, 180, 79, .16);
+  padding-block: 42px 54px;
+  font-size: 14px;
+}
+.foot__in {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.foot__note {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: rgba(248, 240, 223, .45);
+  line-height: 2;
+}
+.foot__note b { color: var(--gold); font-weight: 400; }
+.todo {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--marigold);
+  border: 1px dashed rgba(240, 138, 60, .5);
+  border-radius: 3px;
+  padding: 2px 8px;
+}
+.sect--cream .todo { color: #B4560F; border-color: rgba(180, 86, 15, .45); }
+
+/* ---------- 13. REGISTRATION PAGE ---------------------------------------- */
+.rhero { padding-block: clamp(48px, 7vw, 84px) clamp(30px, 4vw, 48px); }
+.rhero__title { font-size: clamp(38px, 6.4vw, 74px); }
+.rhero__sub { color: var(--on-ink-soft); max-width: 52ch; margin-top: 18px; }
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--on-ink-soft);
+  margin-bottom: 30px;
+  transition: color .25s, gap .25s var(--ease);
+}
+.back:hover { color: var(--gold); gap: 14px; }
+
+.picker {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 34px;
+}
+.pick {
+  text-align: left;
+  background: rgba(33, 18, 59, .7);
+  border: 1px solid rgba(232, 180, 79, .16);
+  border-radius: var(--r);
+  color: var(--on-ink);
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color .3s, background .3s, transform .3s var(--ease);
+}
+.pick:hover { border-color: rgba(232, 180, 79, .45); transform: translateY(-3px); }
+.pick[aria-selected="true"] {
+  background: rgba(124, 63, 228, .16);
+  border-color: var(--gold);
+}
+.pick__seal { width: 44px; height: 44px; flex: none; }
+.pick__name { font-family: var(--display); font-weight: 700; font-size: 19px; line-height: 1.08; letter-spacing: -.02em; }
+.pick__slot { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+
+.panel {
+  border: 1px solid rgba(232, 180, 79, .2);
+  border-radius: var(--r);
+  background: linear-gradient(170deg, var(--ink-2), rgba(24, 11, 44, .86));
+  padding: clamp(26px, 4vw, 46px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: start;
+}
+.panel__name { font-size: clamp(30px, 4.4vw, 46px); }
+.panel__tagline {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-top: 12px;
+}
+.panel__text { color: var(--on-ink-soft); margin: 22px 0 0; }
+
+.block { margin-top: 30px; }
+.block__h {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(232, 180, 79, .16);
+}
+.list { list-style: none; margin: 0; padding: 0; }
+.list li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;
+  color: var(--on-ink-soft);
+  font-size: 15.5px;
+}
+.list li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 10px;
+  width: 6px; height: 6px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.steps li {
+  display: grid;
+  grid-template-columns: 42px 108px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(232, 180, 79, .10);
+  font-size: 15px;
+}
+.steps b { font-family: var(--mono); font-size: 11px; color: var(--gold); font-weight: 400; letter-spacing: .1em; }
+.steps i { font-style: normal; font-family: var(--display); font-weight: 700; font-size: 16px; }
+.steps span { color: var(--on-ink-soft); font-size: 14.5px; }
+
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: rgba(232, 180, 79, .14); border: 1px solid rgba(232, 180, 79, .14); margin-top: 30px; }
+.fact { background: var(--ink); padding: 16px 18px; }
+.fact span { font-family: var(--mono); font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--on-ink-soft); }
+.fact b { display: block; font-family: var(--display); font-weight: 700; font-size: 17px; margin-top: 6px; letter-spacing: -.01em; }
+
+/* registration side rail */
+.rail { position: sticky; top: 92px; }
+.qr {
+  border: 1px solid rgba(232, 180, 79, .24);
+  background: rgba(46, 26, 78, .4);
+  padding: 26px 24px 24px;
+  text-align: center;
+  border-radius: var(--r);
+}
+.qr__h {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.qr__box {
+  background: var(--cream);
+  border-radius: 3px;
+  padding: 14px;
+  width: 196px;
+  height: 196px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+}
+.qr__box img, .qr__box canvas { width: 100% !important; height: 100% !important; }
+.qr__box--empty {
+  background: transparent;
+  border: 1px dashed rgba(240, 138, 60, .5);
+  color: var(--marigold);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  line-height: 1.7;
+  letter-spacing: .04em;
+  padding: 18px;
+  text-align: center;
+}
+.qr__cap {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--on-ink-soft);
+  margin-top: 16px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+.qr__cta { margin-top: 20px; display: grid; gap: 10px; }
+.qr__cta .btn { width: 100%; }
+
+.notice {
+  margin-top: 18px;
+  border: 1px dashed rgba(240, 138, 60, .45);
+  border-radius: 3px;
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.8;
+  letter-spacing: .04em;
+  color: var(--marigold);
+}
+
+/* ---------- 14. REVEAL ANIMATION ---------------------------------------- */
+.rev {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.rev.is-in { opacity: 1; transform: none; }
+
+/* pookalam ring rotation */
+.ring { transform-origin: center; animation: spin var(--dur, 90s) linear infinite; }
+.ring--rev { animation-direction: reverse; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- 15. RESPONSIVE ---------------------------------------------- */
+@media (max-width: 1000px) {
+  .events__grid { grid-template-columns: minmax(0, 1fr); }
+  .picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .panel { grid-template-columns: minmax(0, 1fr); }
+  .rail { position: static; }
+  .qr { max-width: 340px; margin-inline: auto; }
+}
+
+@media (max-width: 860px) {
+  :root { --frame: 8px; }
+  .hero__in { grid-template-columns: minmax(0, 1fr); }
+  .hero__art { order: -1; }
+  .pookalam { width: min(78%, 320px); }
+  .hero__caption { margin-bottom: 26px; }
+  .about__grid { grid-template-columns: minmax(0, 1fr); }
+  .rules { grid-template-columns: minmax(0, 1fr); }
+  .sched__row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+
+  .nav__toggle { display: inline-flex; }
+  .nav__links {
+    position: absolute;
+    top: 68px; left: 0; right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--ink);
+    box-shadow: 0 24px 40px -20px rgba(0, 0, 0, .9);
+    border-bottom: 1px solid rgba(232, 180, 79, .2);
+    padding: 8px 0 20px;
+    display: none;
+  }
+  .nav.is-open .nav__links { display: flex; }
+  .nav__link {
+    padding: 15px var(--gut);
+    border-bottom: 1px solid rgba(232, 180, 79, .08);
+    font-size: 15px;
+  }
+  .nav__link::after { display: none; }
+  .nav__links .btn { margin: 16px var(--gut) 0; }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .hero__cta { flex-direction: column; align-items: stretch; }
+  .hero__cta .btn { width: 100%; }
+  .card { padding: 26px 22px 24px; }
+  .card__foot .btn { width: 100%; }
+  .picker { grid-template-columns: minmax(0, 1fr); }
+  .pick { flex-direction: row; align-items: center; }
+  .pick__seal { width: 34px; height: 34px; }
+  .steps li { grid-template-columns: 34px 1fr; }
+  .steps span { grid-column: 1 / -1; }
+  .qr__box { width: 100%; max-width: 240px; height: auto; aspect-ratio: 1; }
+  .close__title { font-size: clamp(32px, 11vw, 54px); }
+}
+
+/* ---------- 16. MOTION PREFERENCES -------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ring, .strip__track { animation: none !important; }
+  .rev { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: .01ms !important; }
+}
+
+/* ---------- 17. PRINT ---------------------------------------------------- */
+@media print {
+  .nav, .frame, .strip, .hero__art { display: none; }
+  body { background: #fff; color: #000; }
+}
+
+
+/* ---------- SINGLE-FILE BUILD: page routing --------------------------- */
+.page[hidden] { display: none; }
+
+</style>
+</head>
+<body>
+
+<div class="frame" aria-hidden="true">
+  <i class="frame__mark frame__mark--tl"></i><i class="frame__mark frame__mark--tr"></i>
+  <i class="frame__mark frame__mark--bl"></i><i class="frame__mark frame__mark--br"></i>
+</div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#/">
+      <!-- ==== CLUB LOGO ====
+           Replace this generated seal with your logo:
+           <img class="brand__seal" src="assets/logo/technocrats.svg" alt="Technocrats">  -->
+      <span class="brand__seal" data-seal="nav" aria-hidden="true"></span>
+      <span class="brand__txt">
+        <span class="brand__name">TECHAVAM 2026</span>
+        <span class="brand__sub">Technocrats</span>
+      </span>
+    </a>
+
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span>
+    </button>
+
+    <nav class="nav__links" id="navLinks">
+      <a class="nav__link" href="#about">About</a>
+      <a class="nav__link" href="#events">Events</a>
+      <a class="nav__link" href="#participate">Participation</a>
+      <a class="nav__link" href="#schedule">Schedule</a>
+      <a class="btn btn--gold" href="#/register">Register <span class="btn__arrow">→</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page" id="page-home">
+
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap hero__in">
+      <div class="hero__copy">
+        <p class="hero__kicker">Technocrats · Information Technology · Onam 2026</p>
+
+        <h1 class="hero__title">TECHAVAM<em>2026</em></h1>
+
+        <p class="hero__rule">Code <i>•</i> Culture <i>•</i> Celebrate</p>
+
+        <p class="hero__sub">
+          The IT Department's Onam celebration. One morning, four events, and Kerala's
+          oldest festival run the way this department does things — startups, digital
+          art, a treasure hunt across the block, and a coding quest that unlocks level
+          by level.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--gold" href="#/register">Click here to register <span class="btn__arrow">→</span></a>
+          <a class="btn btn--ghost" href="#events">See the four events</a>
+        </div>
+
+        <ul class="hero__meta" id="heroMeta"></ul>
+      </div>
+
+      <div class="hero__art">
+        <div class="pookalam" data-pookalam="hero"></div>
+        <p class="hero__caption">Pookalam · 42 petals · drawn in the browser</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- marquee: what TECHAVAM is made of -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip__track" id="strip"></div>
+  </div>
+
+  <!-- ============================ ABOUT ============================ -->
+  <section class="sect sect--cream" id="about">
+    <div class="wrap">
+      <div class="about__grid">
+        <div class="rev">
+          <p class="eyebrow">About the club</p>
+          <h2 class="sect__title">A student club, a department, and one very old festival.</h2>
+          <!-- ==== CLUB INTRODUCTION ====
+               The paragraphs below come from CLUB.intro in js/config.js.
+               Replace that text with the official write-up. -->
+          <div class="about__body" id="clubIntro"></div>
+        </div>
+
+        <aside class="plaque rev">
+          <!-- ==== CLUB LOGO ====
+               Replace the dashed box below with:
+               <img class="plaque__logo" src="assets/logo/technocrats.png" alt="Technocrats logo"> -->
+          <div class="plaque__logo">ADD CLUB<br>LOGO HERE</div>
+          <h3 class="plaque__name">Technocrats</h3>
+          <p class="plaque__role">IT Department Student Club</p>
+          <ul class="plaque__list">
+            <li><span>Department</span><b>Information Technology</b></li>
+            <li><span>Occasion</span><b>Onam 2026</b></li>
+            <li><span>Open to</span><b>2nd &amp; 3rd year</b></li>
+            <li><span>Team size</span><b>Up to 4</b></li>
+            <li><span>Events</span><b>Four</b></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"></div>
+
+  <!-- ============================ EVENTS ============================ -->
+  <section class="sect" id="events">
+    <div class="wrap">
+      <div class="events__head rev">
+        <div>
+          <p class="eyebrow">The four events</p>
+          <h2 class="sect__title">Four ways to spend the morning.</h2>
+        </div>
+        <p class="sect__lead">
+          Two run before the break, two after. Every event has its own registration
+          form — pick the one you want and take your team in.
+        </p>
+      </div>
+
+      <!-- cards are rendered from EVENTS in js/config.js -->
+      <div class="events__grid" id="eventGrid"></div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"></div>
+
+  <!-- ====================== PARTICIPATION + SCHEDULE ====================== -->
+  <section class="sect sect--cream" id="participate">
+    <div class="wrap">
+      <div class="rev">
+        <p class="eyebrow">Who can participate</p>
+        <h2 class="sect__title">If you are in IT and in 2nd or 3rd year, you are in.</h2>
+        <p class="sect__lead">
+          TECHAVAM is an internal department celebration, so entry is limited. Read
+          this before you fill a form — it saves a rejected registration later.
+        </p>
+      </div>
+
+      <div class="rules">
+        <article class="rule rev">
+          <p class="rule__n">Eligibility</p>
+          <h3 class="rule__t">IT department only</h3>
+          <p class="rule__d">
+            Open to Information Technology students in 2nd year and 3rd year. No other
+            department or year is eligible, so the form does not ask for a department.
+          </p>
+        </article>
+        <article class="rule rev">
+          <p class="rule__n">Teams</p>
+          <h3 class="rule__t">Four members, maximum</h3>
+          <p class="rule__d">
+            Enter alone or with up to three others. Members 2, 3 and 4 are optional on
+            every form — a team of one is a valid team.
+          </p>
+        </article>
+        <article class="rule rev">
+          <p class="rule__n">Registration</p>
+          <h3 class="rule__t">One form per event</h3>
+          <p class="rule__d">
+            Each event has its own Google Form and its own QR code. Both Slot 1 events
+            run at the same time, and so do both Slot 2 events — so pick one from each
+            slot at most.
+          </p>
+        </article>
+      </div>
+
+      <div class="sched rev" id="schedule">
+        <p class="eyebrow" style="margin-top:56px">Schedule</p>
+        <div id="schedRows"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CLOSING ============================ -->
+  <section class="sect close">
+    <div class="wrap rev">
+      <p class="eyebrow" style="justify-content:center">Registrations open</p>
+      <h2 class="sect__title close__title">Sadhya later.<br>Register now.</h2>
+      <p class="close__sub">
+        Choose an event, read its rules, and open the form. Two minutes with your
+        team's roll numbers is all it takes.
+      </p>
+      <a class="btn btn--gold" href="#/register">Click here to register <span class="btn__arrow">→</span></a>
+    </div>
+  </section>
+
+
+  </div>
+
+  <div class="page" id="page-register" hidden>
+
+  <section class="rhero">
+    <div class="wrap">
+      <a class="back" href="#/"><span>←</span> Back to home</a>
+      <h1 class="rhero__title">Register for TECHAVAM 2026</h1>
+      <p class="rhero__sub">
+        Choose your event, read what it actually involves, then open its form. Each
+        event has its own form and its own QR — scanning the wrong one puts your team
+        in the wrong event.
+      </p>
+      <ul class="hero__meta" id="rMeta" style="margin-top:26px"></ul>
+    </div>
+  </section>
+
+  <section style="padding-bottom:clamp(70px,10vw,120px)">
+    <div class="wrap">
+
+      <!-- event selector (rendered from EVENTS in js/config.js) -->
+      <div class="picker" id="picker" role="tablist" aria-label="Choose an event"></div>
+
+      <!-- selected event detail -->
+      <div class="panel" id="panel" role="tabpanel" tabindex="-1"></div>
+
+      <!-- day schedule -->
+      <div class="sched" id="rSched" style="margin-top:56px">
+        <p class="eyebrow">Timing on the day</p>
+        <div id="rSchedRows"></div>
+      </div>
+
+    </div>
+  </section>
+
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div>
+      <p class="brand__name">TECHAVAM 2026</p>
+      <p class="foot__note">Technocrats · Department of Information Technology</p>
+    </div>
+    <!-- ==== CONTACT DETAILS ====
+         Fill FEST.contactName / contactPhone / contactEmail / instagram in
+         js/config.js. Until then this block shows visible placeholders. -->
+    <div class="foot__note" id="footContact"></div>
+  </div>
+</footer>
+
+<script>var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this.parsedData=[];for(var b=[],d=0,e=this.data.length;e>d;d++){var f=this.data.charCodeAt(d);f>65536?(b[0]=240|(1835008&f)>>>18,b[1]=128|(258048&f)>>>12,b[2]=128|(4032&f)>>>6,b[3]=128|63&f):f>2048?(b[0]=224|(61440&f)>>>12,b[1]=128|(4032&f)>>>6,b[2]=128|63&f):f>128?(b[0]=192|(1984&f)>>>6,b[1]=128|63&f):b[0]=f,this.parsedData=this.parsedData.concat(b)}this.parsedData.length!=this.data.length&&(this.parsedData.unshift(191),this.parsedData.unshift(187),this.parsedData.unshift(239))}function b(a,b){this.typeNumber=a,this.errorCorrectLevel=b,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=[]}function i(a,b){if(void 0==a.length)throw new Error(a.length+"/"+b);for(var c=0;c<a.length&&0==a[c];)c++;this.num=new Array(a.length-c+b);for(var d=0;d<a.length-c;d++)this.num[d]=a[d+c]}function j(a,b){this.totalCount=a,this.dataCount=b}function k(){this.buffer=[],this.length=0}function m(){return"undefined"!=typeof CanvasRenderingContext2D}function n(){var a=!1,b=navigator.userAgent;return/android/i.test(b)&&(a=!0,aMat=b.toString().match(/android ([0-9]\.[0-9])/i),aMat&&aMat[1]&&(a=parseFloat(aMat[1]))),a}function r(a,b){for(var c=1,e=s(a),f=0,g=l.length;g>=f;f++){var h=0;switch(b){case d.L:h=l[f][0];break;case d.M:h=l[f][1];break;case d.Q:h=l[f][2];break;case d.H:h=l[f][3]}if(h>=e)break;c++}if(c>l.length)throw new Error("Too long data");return c}function s(a){var b=encodeURI(a).toString().replace(/\%[0-9a-fA-F]{2}/g,"a");return b.length+(b.length!=a?3:0)}a.prototype={getLength:function(){return this.parsedData.length},write:function(a){for(var b=0,c=this.parsedData.length;c>b;b++)a.put(this.parsedData[b],8)}},b.prototype={addData:function(b){var c=new a(b);this.dataList.push(c),this.dataCache=null},isDark:function(a,b){if(0>a||this.moduleCount<=a||0>b||this.moduleCount<=b)throw new Error(a+","+b);return this.modules[a][b]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(a,c){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var d=0;d<this.moduleCount;d++){this.modules[d]=new Array(this.moduleCount);for(var e=0;e<this.moduleCount;e++)this.modules[d][e]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(a,c),this.typeNumber>=7&&this.setupTypeNumber(a),null==this.dataCache&&(this.dataCache=b.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,c)},setupPositionProbePattern:function(a,b){for(var c=-1;7>=c;c++)if(!(-1>=a+c||this.moduleCount<=a+c))for(var d=-1;7>=d;d++)-1>=b+d||this.moduleCount<=b+d||(this.modules[a+c][b+d]=c>=0&&6>=c&&(0==d||6==d)||d>=0&&6>=d&&(0==c||6==c)||c>=2&&4>=c&&d>=2&&4>=d?!0:!1)},getBestMaskPattern:function(){for(var a=0,b=0,c=0;8>c;c++){this.makeImpl(!0,c);var d=f.getLostPoint(this);(0==c||a>d)&&(a=d,b=c)}return b},createMovieClip:function(a,b,c){var d=a.createEmptyMovieClip(b,c),e=1;this.make();for(var f=0;f<this.modules.length;f++)for(var g=f*e,h=0;h<this.modules[f].length;h++){var i=h*e,j=this.modules[f][h];j&&(d.beginFill(0,100),d.moveTo(i,g),d.lineTo(i+e,g),d.lineTo(i+e,g+e),d.lineTo(i,g+e),d.endFill())}return d},setupTimingPattern:function(){for(var a=8;a<this.moduleCount-8;a++)null==this.modules[a][6]&&(this.modules[a][6]=0==a%2);for(var b=8;b<this.moduleCount-8;b++)null==this.modules[6][b]&&(this.modules[6][b]=0==b%2)},setupPositionAdjustPattern:function(){for(var a=f.getPatternPosition(this.typeNumber),b=0;b<a.length;b++)for(var c=0;c<a.length;c++){var d=a[b],e=a[c];if(null==this.modules[d][e])for(var g=-2;2>=g;g++)for(var h=-2;2>=h;h++)this.modules[d+g][e+h]=-2==g||2==g||-2==h||2==h||0==g&&0==h?!0:!1}},setupTypeNumber:function(a){for(var b=f.getBCHTypeNumber(this.typeNumber),c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[Math.floor(c/3)][c%3+this.moduleCount-8-3]=d}for(var c=0;18>c;c++){var d=!a&&1==(1&b>>c);this.modules[c%3+this.moduleCount-8-3][Math.floor(c/3)]=d}},setupTypeInfo:function(a,b){for(var c=this.errorCorrectLevel<<3|b,d=f.getBCHTypeInfo(c),e=0;15>e;e++){var g=!a&&1==(1&d>>e);6>e?this.modules[e][8]=g:8>e?this.modules[e+1][8]=g:this.modules[this.moduleCount-15+e][8]=g}for(var e=0;15>e;e++){var g=!a&&1==(1&d>>e);8>e?this.modules[8][this.moduleCount-e-1]=g:9>e?this.modules[8][15-e-1+1]=g:this.modules[8][15-e-1]=g}this.modules[this.moduleCount-8][8]=!a},mapData:function(a,b){for(var c=-1,d=this.moduleCount-1,e=7,g=0,h=this.moduleCount-1;h>0;h-=2)for(6==h&&h--;;){for(var i=0;2>i;i++)if(null==this.modules[d][h-i]){var j=!1;g<a.length&&(j=1==(1&a[g]>>>e));var k=f.getMask(b,d,h-i);k&&(j=!j),this.modules[d][h-i]=j,e--,-1==e&&(g++,e=7)}if(d+=c,0>d||this.moduleCount<=d){d-=c,c=-c;break}}}},b.PAD0=236,b.PAD1=17,b.createData=function(a,c,d){for(var e=j.getRSBlocks(a,c),g=new k,h=0;h<d.length;h++){var i=d[h];g.put(i.mode,4),g.put(i.getLength(),f.getLengthInBits(i.mode,a)),i.write(g)}for(var l=0,h=0;h<e.length;h++)l+=e[h].dataCount;if(g.getLengthInBits()>8*l)throw new Error("code length overflow. ("+g.getLengthInBits()+">"+8*l+")");for(g.getLengthInBits()+4<=8*l&&g.put(0,4);0!=g.getLengthInBits()%8;)g.putBit(!1);for(;;){if(g.getLengthInBits()>=8*l)break;if(g.put(b.PAD0,8),g.getLengthInBits()>=8*l)break;g.put(b.PAD1,8)}return b.createBytes(g,e)},b.createBytes=function(a,b){for(var c=0,d=0,e=0,g=new Array(b.length),h=new Array(b.length),j=0;j<b.length;j++){var k=b[j].dataCount,l=b[j].totalCount-k;d=Math.max(d,k),e=Math.max(e,l),g[j]=new Array(k);for(var m=0;m<g[j].length;m++)g[j][m]=255&a.buffer[m+c];c+=k;var n=f.getErrorCorrectPolynomial(l),o=new i(g[j],n.getLength()-1),p=o.mod(n);h[j]=new Array(n.getLength()-1);for(var m=0;m<h[j].length;m++){var q=m+p.getLength()-h[j].length;h[j][m]=q>=0?p.get(q):0}}for(var r=0,m=0;m<b.length;m++)r+=b[m].totalCount;for(var s=new Array(r),t=0,m=0;d>m;m++)for(var j=0;j<b.length;j++)m<g[j].length&&(s[t++]=g[j][m]);for(var m=0;e>m;m++)for(var j=0;j<b.length;j++)m<h[j].length&&(s[t++]=h[j][m]);return s};for(var c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},d={L:1,M:0,Q:3,H:2},e={PATTERN000:0,PATTERN001:1,PATTERN010:2,PATTERN011:3,PATTERN100:4,PATTERN101:5,PATTERN110:6,PATTERN111:7},f={PATTERN_POSITION_TABLE:[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],G15:1335,G18:7973,G15_MASK:21522,getBCHTypeInfo:function(a){for(var b=a<<10;f.getBCHDigit(b)-f.getBCHDigit(f.G15)>=0;)b^=f.G15<<f.getBCHDigit(b)-f.getBCHDigit(f.G15);return(a<<10|b)^f.G15_MASK},getBCHTypeNumber:function(a){for(var b=a<<12;f.getBCHDigit(b)-f.getBCHDigit(f.G18)>=0;)b^=f.G18<<f.getBCHDigit(b)-f.getBCHDigit(f.G18);return a<<12|b},getBCHDigit:function(a){for(var b=0;0!=a;)b++,a>>>=1;return b},getPatternPosition:function(a){return f.PATTERN_POSITION_TABLE[a-1]},getMask:function(a,b,c){switch(a){case e.PATTERN000:return 0==(b+c)%2;case e.PATTERN001:return 0==b%2;case e.PATTERN010:return 0==c%3;case e.PATTERN011:return 0==(b+c)%3;case e.PATTERN100:return 0==(Math.floor(b/2)+Math.floor(c/3))%2;case e.PATTERN101:return 0==b*c%2+b*c%3;case e.PATTERN110:return 0==(b*c%2+b*c%3)%2;case e.PATTERN111:return 0==(b*c%3+(b+c)%2)%2;default:throw new Error("bad maskPattern:"+a)}},getErrorCorrectPolynomial:function(a){for(var b=new i([1],0),c=0;a>c;c++)b=b.multiply(new i([1,g.gexp(c)],0));return b},getLengthInBits:function(a,b){if(b>=1&&10>b)switch(a){case c.MODE_NUMBER:return 10;case c.MODE_ALPHA_NUM:return 9;case c.MODE_8BIT_BYTE:return 8;case c.MODE_KANJI:return 8;default:throw new Error("mode:"+a)}else if(27>b)switch(a){case c.MODE_NUMBER:return 12;case c.MODE_ALPHA_NUM:return 11;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 10;default:throw new Error("mode:"+a)}else{if(!(41>b))throw new Error("type:"+b);switch(a){case c.MODE_NUMBER:return 14;case c.MODE_ALPHA_NUM:return 13;case c.MODE_8BIT_BYTE:return 16;case c.MODE_KANJI:return 12;default:throw new Error("mode:"+a)}}},getLostPoint:function(a){for(var b=a.getModuleCount(),c=0,d=0;b>d;d++)for(var e=0;b>e;e++){for(var f=0,g=a.isDark(d,e),h=-1;1>=h;h++)if(!(0>d+h||d+h>=b))for(var i=-1;1>=i;i++)0>e+i||e+i>=b||(0!=h||0!=i)&&g==a.isDark(d+h,e+i)&&f++;f>5&&(c+=3+f-5)}for(var d=0;b-1>d;d++)for(var e=0;b-1>e;e++){var j=0;a.isDark(d,e)&&j++,a.isDark(d+1,e)&&j++,a.isDark(d,e+1)&&j++,a.isDark(d+1,e+1)&&j++,(0==j||4==j)&&(c+=3)}for(var d=0;b>d;d++)for(var e=0;b-6>e;e++)a.isDark(d,e)&&!a.isDark(d,e+1)&&a.isDark(d,e+2)&&a.isDark(d,e+3)&&a.isDark(d,e+4)&&!a.isDark(d,e+5)&&a.isDark(d,e+6)&&(c+=40);for(var e=0;b>e;e++)for(var d=0;b-6>d;d++)a.isDark(d,e)&&!a.isDark(d+1,e)&&a.isDark(d+2,e)&&a.isDark(d+3,e)&&a.isDark(d+4,e)&&!a.isDark(d+5,e)&&a.isDark(d+6,e)&&(c+=40);for(var k=0,e=0;b>e;e++)for(var d=0;b>d;d++)a.isDark(d,e)&&k++;var l=Math.abs(100*k/b/b-50)/5;return c+=10*l}},g={glog:function(a){if(1>a)throw new Error("glog("+a+")");return g.LOG_TABLE[a]},gexp:function(a){for(;0>a;)a+=255;for(;a>=256;)a-=255;return g.EXP_TABLE[a]},EXP_TABLE:new Array(256),LOG_TABLE:new Array(256)},h=0;8>h;h++)g.EXP_TABLE[h]=1<<h;for(var h=8;256>h;h++)g.EXP_TABLE[h]=g.EXP_TABLE[h-4]^g.EXP_TABLE[h-5]^g.EXP_TABLE[h-6]^g.EXP_TABLE[h-8];for(var h=0;255>h;h++)g.LOG_TABLE[g.EXP_TABLE[h]]=h;i.prototype={get:function(a){return this.num[a]},getLength:function(){return this.num.length},multiply:function(a){for(var b=new Array(this.getLength()+a.getLength()-1),c=0;c<this.getLength();c++)for(var d=0;d<a.getLength();d++)b[c+d]^=g.gexp(g.glog(this.get(c))+g.glog(a.get(d)));return new i(b,0)},mod:function(a){if(this.getLength()-a.getLength()<0)return this;for(var b=g.glog(this.get(0))-g.glog(a.get(0)),c=new Array(this.getLength()),d=0;d<this.getLength();d++)c[d]=this.get(d);for(var d=0;d<a.getLength();d++)c[d]^=g.gexp(g.glog(a.get(d))+b);return new i(c,0).mod(a)}},j.RS_BLOCK_TABLE=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],j.getRSBlocks=function(a,b){var c=j.getRsBlockTable(a,b);if(void 0==c)throw new Error("bad rs block @ typeNumber:"+a+"/errorCorrectLevel:"+b);for(var d=c.length/3,e=[],f=0;d>f;f++)for(var g=c[3*f+0],h=c[3*f+1],i=c[3*f+2],k=0;g>k;k++)e.push(new j(h,i));return e},j.getRsBlockTable=function(a,b){switch(b){case d.L:return j.RS_BLOCK_TABLE[4*(a-1)+0];case d.M:return j.RS_BLOCK_TABLE[4*(a-1)+1];case d.Q:return j.RS_BLOCK_TABLE[4*(a-1)+2];case d.H:return j.RS_BLOCK_TABLE[4*(a-1)+3];default:return void 0}},k.prototype={get:function(a){var b=Math.floor(a/8);return 1==(1&this.buffer[b]>>>7-a%8)},put:function(a,b){for(var c=0;b>c;c++)this.putBit(1==(1&a>>>b-c-1))},getLengthInBits:function(){return this.length},putBit:function(a){var b=Math.floor(this.length/8);this.buffer.length<=b&&this.buffer.push(0),a&&(this.buffer[b]|=128>>>this.length%8),this.length++}};var l=[[17,14,11,7],[32,26,20,14],[53,42,32,24],[78,62,46,34],[106,84,60,44],[134,106,74,58],[154,122,86,64],[192,152,108,84],[230,180,130,98],[271,213,151,119],[321,251,177,137],[367,287,203,155],[425,331,241,177],[458,362,258,194],[520,412,292,220],[586,450,322,250],[644,504,364,280],[718,560,394,310],[792,624,442,338],[858,666,482,382],[929,711,509,403],[1003,779,565,439],[1091,857,611,461],[1171,911,661,511],[1273,997,715,535],[1367,1059,751,593],[1465,1125,805,625],[1528,1190,868,658],[1628,1264,908,698],[1732,1370,982,742],[1840,1452,1030,790],[1952,1538,1112,842],[2068,1628,1168,898],[2188,1722,1228,958],[2303,1809,1283,983],[2431,1911,1351,1051],[2563,1989,1423,1093],[2699,2099,1499,1139],[2809,2213,1579,1219],[2953,2331,1663,1273]],o=function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){function g(a,b){var c=document.createElementNS("http://www.w3.org/2000/svg",a);for(var d in b)b.hasOwnProperty(d)&&c.setAttribute(d,b[d]);return c}var b=this._htOption,c=this._el,d=a.getModuleCount();Math.floor(b.width/d),Math.floor(b.height/d),this.clear();var h=g("svg",{viewBox:"0 0 "+String(d)+" "+String(d),width:"100%",height:"100%",fill:b.colorLight});h.setAttributeNS("http://www.w3.org/2000/xmlns/","xmlns:xlink","http://www.w3.org/1999/xlink"),c.appendChild(h),h.appendChild(g("rect",{fill:b.colorDark,width:"1",height:"1",id:"template"}));for(var i=0;d>i;i++)for(var j=0;d>j;j++)if(a.isDark(i,j)){var k=g("use",{x:String(i),y:String(j)});k.setAttributeNS("http://www.w3.org/1999/xlink","href","#template"),h.appendChild(k)}},a.prototype.clear=function(){for(;this._el.hasChildNodes();)this._el.removeChild(this._el.lastChild)},a}(),p="svg"===document.documentElement.tagName.toLowerCase(),q=p?o:m()?function(){function a(){this._elImage.src=this._elCanvas.toDataURL("image/png"),this._elImage.style.display="block",this._elCanvas.style.display="none"}function d(a,b){var c=this;if(c._fFail=b,c._fSuccess=a,null===c._bSupportDataURI){var d=document.createElement("img"),e=function(){c._bSupportDataURI=!1,c._fFail&&_fFail.call(c)},f=function(){c._bSupportDataURI=!0,c._fSuccess&&c._fSuccess.call(c)};return d.onabort=e,d.onerror=e,d.onload=f,d.src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",void 0}c._bSupportDataURI===!0&&c._fSuccess?c._fSuccess.call(c):c._bSupportDataURI===!1&&c._fFail&&c._fFail.call(c)}if(this._android&&this._android<=2.1){var b=1/window.devicePixelRatio,c=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(a,d,e,f,g,h,i,j){if("nodeName"in a&&/img/i.test(a.nodeName))for(var l=arguments.length-1;l>=1;l--)arguments[l]=arguments[l]*b;else"undefined"==typeof j&&(arguments[1]*=b,arguments[2]*=b,arguments[3]*=b,arguments[4]*=b);c.apply(this,arguments)}}var e=function(a,b){this._bIsPainted=!1,this._android=n(),this._htOption=b,this._elCanvas=document.createElement("canvas"),this._elCanvas.width=b.width,this._elCanvas.height=b.height,a.appendChild(this._elCanvas),this._el=a,this._oContext=this._elCanvas.getContext("2d"),this._bIsPainted=!1,this._elImage=document.createElement("img"),this._elImage.style.display="none",this._el.appendChild(this._elImage),this._bSupportDataURI=null};return e.prototype.draw=function(a){var b=this._elImage,c=this._oContext,d=this._htOption,e=a.getModuleCount(),f=d.width/e,g=d.height/e,h=Math.round(f),i=Math.round(g);b.style.display="none",this.clear();for(var j=0;e>j;j++)for(var k=0;e>k;k++){var l=a.isDark(j,k),m=k*f,n=j*g;c.strokeStyle=l?d.colorDark:d.colorLight,c.lineWidth=1,c.fillStyle=l?d.colorDark:d.colorLight,c.fillRect(m,n,f,g),c.strokeRect(Math.floor(m)+.5,Math.floor(n)+.5,h,i),c.strokeRect(Math.ceil(m)-.5,Math.ceil(n)-.5,h,i)}this._bIsPainted=!0},e.prototype.makeImage=function(){this._bIsPainted&&d.call(this,a)},e.prototype.isPainted=function(){return this._bIsPainted},e.prototype.clear=function(){this._oContext.clearRect(0,0,this._elCanvas.width,this._elCanvas.height),this._bIsPainted=!1},e.prototype.round=function(a){return a?Math.floor(1e3*a)/1e3:a},e}():function(){var a=function(a,b){this._el=a,this._htOption=b};return a.prototype.draw=function(a){for(var b=this._htOption,c=this._el,d=a.getModuleCount(),e=Math.floor(b.width/d),f=Math.floor(b.height/d),g=['<table style="border:0;border-collapse:collapse;">'],h=0;d>h;h++){g.push("<tr>");for(var i=0;d>i;i++)g.push('<td style="border:0;border-collapse:collapse;padding:0;margin:0;width:'+e+"px;height:"+f+"px;background-color:"+(a.isDark(h,i)?b.colorDark:b.colorLight)+';"></td>');g.push("</tr>")}g.push("</table>"),c.innerHTML=g.join("");var j=c.childNodes[0],k=(b.width-j.offsetWidth)/2,l=(b.height-j.offsetHeight)/2;k>0&&l>0&&(j.style.margin=l+"px "+k+"px")},a.prototype.clear=function(){this._el.innerHTML=""},a}();QRCode=function(a,b){if(this._htOption={width:256,height:256,typeNumber:4,colorDark:"#000000",colorLight:"#ffffff",correctLevel:d.H},"string"==typeof b&&(b={text:b}),b)for(var c in b)this._htOption[c]=b[c];"string"==typeof a&&(a=document.getElementById(a)),this._android=n(),this._el=a,this._oQRCode=null,this._oDrawing=new q(this._el,this._htOption),this._htOption.text&&this.makeCode(this._htOption.text)},QRCode.prototype.makeCode=function(a){this._oQRCode=new b(r(a,this._htOption.correctLevel),this._htOption.correctLevel),this._oQRCode.addData(a),this._oQRCode.make(),this._el.title=a,this._oDrawing.draw(this._oQRCode),this.makeImage()},QRCode.prototype.makeImage=function(){"function"==typeof this._oDrawing.makeImage&&(!this._android||this._android>=3)&&this._oDrawing.makeImage()},QRCode.prototype.clear=function(){this._oDrawing.clear()},QRCode.CorrectLevel=d}();</script>
+<script>
+/* ============================================================================
+   TECHAVAM 2026 — CONFIGURATION
+   ----------------------------------------------------------------------------
+   THIS IS THE ONLY FILE YOU NEED TO EDIT for links, dates, venue and contacts.
+   Everything on both pages is rendered from what is below.
+   ========================================================================== */
+
+
+/* ---------------------------------------------------------------------------
+   1) GOOGLE FORM URLS  <-- PASTE YOUR FOUR LINKS HERE
+   ---------------------------------------------------------------------------
+   Create FOUR separate Google Forms (one per event), then paste each form's
+   share link below. Use the "Send > link" URL, e.g.
+   https://forms.gle/AbCdEf123456
+
+   Until you replace a placeholder, the site will show an honest
+   "link not added yet" state instead of a dead button or an unscannable QR.
+   ------------------------------------------------------------------------- */
+const FORM_LINKS = {
+  startup:  "STARTUP_MAVELI_GOOGLE_FORM_URL",
+  pookolam: "DIGITAL_POOKOLAM_GOOGLE_FORM_URL",
+  race:     "TECH_KERALA_AMAZING_RACE_GOOGLE_FORM_URL",
+  code:     "CODE_QUESTERS_GOOGLE_FORM_URL"
+};
+
+
+/* ---------------------------------------------------------------------------
+   2) EVENT DAY DETAILS  <-- ADD DATE / VENUE / CONTACT HERE
+   ---------------------------------------------------------------------------
+   Leave a value as null and the site will render a visible placeholder chip
+   rather than inventing information.
+   ------------------------------------------------------------------------- */
+const FEST = {
+  date:  null,   // e.g. "Saturday, 12 September 2026"
+  venue: null,   // e.g. "IT Block, Seminar Hall"
+  contactName:  null,   // e.g. "Student coordinator name"
+  contactPhone: null,   // e.g. "+91 XXXXX XXXXX"
+  contactEmail: null,   // e.g. "technocrats@yourcollege.edu"
+  instagram:    null    // e.g. "https://instagram.com/..."
+};
+
+
+/* ---------------------------------------------------------------------------
+   3) CLUB INTRODUCTION  <-- REPLACE WITH THE OFFICIAL TEXT
+   ---------------------------------------------------------------------------
+   The paragraphs below are a neutral draft, not official copy. Replace them
+   with the club's approved introduction. Do not add awards or numbers that
+   have not been verified.
+   ------------------------------------------------------------------------- */
+const CLUB = {
+  name: "Technocrats",
+  role: "IT Department Student Club",
+  intro: [
+    "[ADD OFFICIAL CLUB INTRODUCTION HERE] Technocrats is a student-driven initiative of the Information Technology department, built around technology, innovation, creativity, collaboration and student development.",
+    "TECHAVAM 2026 is our department-level Onam celebration — a day where students take on technology-driven, creative and culturally inspired challenges together."
+  ]
+};
+
+
+/* ---------------------------------------------------------------------------
+   4) SCHEDULE
+   ------------------------------------------------------------------------- */
+const SCHEDULE = [
+  { label: "Slot 1", time: "8:45 – 10:45 AM",  events: "Startup Maveli · Amazing Race",  kind: "slot"  },
+  { label: "Break",  time: "10:45 – 11:15 AM", events: "Refreshments",                   kind: "break" },
+  { label: "Slot 2", time: "11:30 AM – 1:30 PM", events: "Digital Pookolam · Code Questers", kind: "slot" }
+];
+
+
+/* ---------------------------------------------------------------------------
+   5) THE FOUR EVENTS
+   ---------------------------------------------------------------------------
+   These four are final. Editing text here updates BOTH the home page and the
+   registration page. "seal" controls the generated pookalam emblem colours.
+   ------------------------------------------------------------------------- */
+const EVENTS = [
+  {
+    id: "startup",
+    name: "Startup Maveli",
+    tagline: "Modernising Onam through innovation",
+    slot: "Slot 1",
+    time: "8:45 – 10:45 AM",
+    teaser: "Mahabali is back in 2026 and he wants Onam upgraded. Build the startup that does it.",
+    description:
+      "Mahabali has returned in 2026 and wants to modernise Onam. Your team builds a technology startup that solves a real Onam or Kerala problem — then pitches it like a founder. MaveliGPT, SadhyaAI, Pookalam-as-a-Service, Smart Vadamvali, an Onam event app, an AI Onam assistant: the idea is yours, the ambition is the point.",
+    deliverables: [
+      "Startup name and logo",
+      "Problem statement and solution",
+      "A website or app prototype",
+      "Business model",
+      "A short pitch to the panel"
+    ],
+    rules: [
+      "Teams of 1 to 4 members.",
+      "Bring your own laptop; the department provides power and Wi-Fi.",
+      "The idea must connect to Onam, Kerala or the celebration itself.",
+      "AI tools are allowed — say so in your pitch.",
+      "Pitch time is capped; the panel stops you when it ends."
+    ],
+    tags: ["Innovation", "Entrepreneurship", "AI", "Prototype"],
+    seal: { rings: [8, 12, 16], hue: "gold" }
+  },
+  {
+    id: "pookolam",
+    name: "Digital Pookolam",
+    tagline: "Where tradition meets digital creativity",
+    slot: "Slot 2",
+    time: "11:30 AM – 1:30 PM",
+    teaser: "The same flowers, the same rings, none of the flowers. Draw the pookalam on a screen.",
+    description:
+      "A theme-based digital art competition built on the traditional Kerala pookalam. The theme is announced at the start of the slot — Technology Meets Tradition, Kerala 2050, Digital Mahabali, Green Onam, AI Meets Kerala, Onam in Space are the kind of prompts to expect. Organisers may also drop in hidden elements your design has to work in.",
+    deliverables: [
+      "One digital pookalam on the announced theme",
+      "Any hidden elements the organisers add mid-slot",
+      "A one-line description of your concept"
+    ],
+    rules: [
+      "Teams of 1 to 4 members.",
+      "Any software you like — Figma, Illustrator, Procreate, Blender, code.",
+      "The theme is revealed only when the slot begins.",
+      "Work must be created during the slot. Pre-made art is disqualified.",
+      "Submit as PNG or JPG at the size announced by the organisers."
+    ],
+    tags: ["Digital Art", "Design", "Creativity", "Onam"],
+    seal: { rings: [6, 12, 18], hue: "marigold" }
+  },
+  {
+    id: "race",
+    name: "Tech + Kerala Amazing Race",
+    tagline: "Solve · Scan · Run · Discover",
+    slot: "Slot 1",
+    time: "8:45 – 10:45 AM",
+    teaser: "Seven checkpoints across the department. Code, culture, QR codes and your legs.",
+    description:
+      "A hybrid treasure hunt: part debugging, part Kerala trivia, part physical challenge. Teams move checkpoint to checkpoint, and each one only opens after you clear the last. The final checkpoint is Mahabali himself.",
+    checkpoints: [
+      { n: "01", label: "Coding",   text: "Fix a small bug to move on." },
+      { n: "02", label: "Kerala",   text: "Identify a traditional item, song, place or personality." },
+      { n: "03", label: "QR",       text: "Scan the code, solve the clue it hides." },
+      { n: "04", label: "Physical", text: "A short team challenge. No shortcuts." },
+      { n: "05", label: "AI",       text: "Prompt your way past an AI task." },
+      { n: "06", label: "Logic",    text: "A puzzle that does not care how fast you type." },
+      { n: "07", label: "Mahabali", text: "Find him. Recover the treasure. Finish." }
+    ],
+    deliverables: [
+      "Clear all checkpoints in order",
+      "Collect the token issued at each checkpoint",
+      "Reach the final checkpoint before the slot closes"
+    ],
+    rules: [
+      "Teams of 1 to 4 members.",
+      "Carry one charged phone with a working QR scanner.",
+      "Checkpoints must be cleared in order — skipping voids the run.",
+      "Wear something you can move in.",
+      "Volunteer decisions at a checkpoint are final."
+    ],
+    tags: ["Treasure Hunt", "QR", "Technology", "Kerala", "Teamwork"],
+    seal: { rings: [10, 10, 20], hue: "lavender" }
+  },
+  {
+    id: "code",
+    name: "Code Questers",
+    tagline: "Crack the code · Complete the quest",
+    slot: "Slot 2",
+    time: "11:30 AM – 1:30 PM",
+    teaser: "Six locked levels. Clearing one is the only way to see the next.",
+    description:
+      "Not a conventional programming contest — a progressive quest. Every level is a different kind of thinking, and each one you clear unlocks the one after it. You will not see level six until level five falls.",
+    levels: [
+      { n: "01", label: "Bug Hunt",          text: "Find what is broken." },
+      { n: "02", label: "Output Prediction", text: "Read the code. Say what it prints." },
+      { n: "03", label: "Logic Quest",       text: "Reason it out before you type." },
+      { n: "04", label: "Code Breaker",      text: "Decode what is hidden." },
+      { n: "05", label: "Speed Coding",      text: "Correct, and fast." },
+      { n: "06", label: "Final Code",        text: "Everything above, at once." }
+    ],
+    deliverables: [
+      "Clear each level to unlock the next",
+      "Working solutions, not pseudocode",
+      "Finish as far as you can before the slot closes"
+    ],
+    rules: [
+      "Teams of 1 to 4 members.",
+      "Language of your choice unless a level says otherwise.",
+      "Levels unlock in sequence — no jumping ahead.",
+      "Ranking is by levels cleared, then by time.",
+      "AI assistants are not allowed inside this event."
+    ],
+    tags: ["Coding", "Debugging", "Logic", "Problem Solving"],
+    seal: { rings: [4, 16, 24], hue: "violet" }
+  }
+];
+
+/* Attach the form links to the events (keeps FORM_LINKS as the one place to edit). */
+EVENTS.forEach(function (ev) { ev.formUrl = FORM_LINKS[ev.id]; });
+
+/* A URL still holding its placeholder value is treated as "not added yet". */
+function isFormLinkReady(url) {
+  return typeof url === "string" && /^https?:\/\//i.test(url.trim());
+}
+
+</script>
+<script>
+/* ============================================================================
+   POOKALAM GENERATOR
+   ----------------------------------------------------------------------------
+   Every flower on this site is drawn by maths, not placed by hand. A pookalam
+   is concentric rings of petals laid inward-out; this builds exactly that from
+   a petal count per ring, then lets CSS rotate alternate rings.
+
+   Nothing here needs editing. Change a look by passing a different `counts`
+   array or `hue` in js/config.js (each event has a `seal` object).
+   ========================================================================== */
+
+(function (global) {
+  "use strict";
+
+  var HUES = {
+    gold:     ["#E8B44F", "#F08A3C", "#C7ADF0", "#7C3FE4"],
+    marigold: ["#F08A3C", "#E8B44F", "#C7ADF0", "#7C3FE4"],
+    lavender: ["#C7ADF0", "#7C3FE4", "#E8B44F", "#F08A3C"],
+    violet:   ["#7C3FE4", "#C7ADF0", "#E8B44F", "#F08A3C"]
+  };
+
+  /* One petal: a lens shape pointing up, from radius r0 out to r1. */
+  function petalPath(r0, r1, w) {
+    var mid = -(r0 + r1) / 2;
+    return "M0," + -r0 +
+           " Q" + w + "," + mid + " 0," + -r1 +
+           " Q" + (-w) + "," + mid + " 0," + -r0 + "Z";
+  }
+
+  function ring(count, r0, r1, w, attrs, spin, reverse) {
+    var petals = "";
+    for (var i = 0; i < count; i++) {
+      petals += '<path d="' + petalPath(r0, r1, w) +
+                '" transform="rotate(' + (360 / count) * i + ')" ' + attrs + "/>";
+    }
+    return '<g class="ring' + (reverse ? " ring--rev" : "") +
+           '" style="transform-origin:0 0;--dur:' + spin + 's">' + petals + "</g>";
+  }
+
+  /* Outermost band: petals give way to circuit traces — the tech half. */
+  function circuitRing(count, r, len) {
+    var out = "";
+    for (var i = 0; i < count; i++) {
+      var a = (360 / count) * i;
+      out += '<g transform="rotate(' + a + ')">' +
+             '<line x1="0" y1="' + -r + '" x2="0" y2="' + -(r + len) +
+             '" stroke="#E8B44F" stroke-width="1.1" opacity=".55"/>' +
+             '<rect x="-2.4" y="' + -(r + len + 4.8) + '" width="4.8" height="4.8" ' +
+             'fill="#E8B44F" opacity=".8"/></g>';
+    }
+    return '<g class="ring ring--rev" style="transform-origin:0 0;--dur:170s">' + out + "</g>";
+  }
+
+  /**
+   * Build a pookalam as an SVG string.
+   * @param {Object} o
+   *   counts  {number[]} petals per ring, inner to outer (2 or 3 entries)
+   *   hue     {string}   gold | marigold | lavender | violet
+   *   circuit {boolean}  draw the outer circuit band
+   *   label   {string}   accessible description
+   */
+  function pookalam(o) {
+    o = o || {};
+    var counts  = o.counts || [8, 14, 20];
+    var pal     = HUES[o.hue] || HUES.gold;
+    var circuit = o.circuit !== false;
+    var label   = o.label || "Pookalam emblem";
+
+    var s = "";
+
+    /* outer boundary — two hairlines, the kasavu edge of the flower bed */
+    if (circuit) {
+      s += '<circle r="192" fill="none" stroke="#E8B44F" stroke-width="1" opacity=".28"/>';
+      s += '<circle r="186" fill="none" stroke="#E8B44F" stroke-width="1" opacity=".14"/>';
+      s += circuitRing(Math.max(24, counts[counts.length - 1] * 2), 168, 10);
+    }
+
+    /* bands run inner to outer; with fewer rings we keep the outer bands so a
+       two-ring seal still fills its box */
+    var bands = o.bands || [
+      { r0: 26,  r1: 76,  w: 17 },
+      { r0: 68,  r1: 124, w: 15 },
+      { r0: 118, r1: 170, w: 11 }
+    ];
+    var n = counts.length;
+    for (var i = n - 1; i >= 0; i--) {
+      var b = bands[bands.length - n + i] || bands[i];
+      var c = pal[i % pal.length];
+      var solid = o.solid === true || i % 2 === 0;
+      var attrs = solid
+        ? 'fill="' + c + '" opacity="' + (i % 2 === 0 ? ".92" : ".7") + '"'
+        : 'fill="' + c + '" opacity=".2" stroke="' + c + '" stroke-width="1.4"';
+      s += ring(counts[i], b.r0, b.r1, b.w, attrs, 120 - i * 26, i % 2 === 1);
+    }
+
+    /* centre — the lamp */
+    s += '<circle r="26" fill="' + pal[0] + '" opacity=".16"/>';
+    s += '<circle r="26" fill="none" stroke="' + pal[0] + '" stroke-width="1.2" opacity=".7"/>';
+    s += '<circle r="12" fill="' + pal[0] + '"/>';
+    s += '<circle r="5"  fill="#180B2C"/>';
+
+    return '<svg viewBox="0 0 400 400" role="img" aria-label="' + label + '" ' +
+           'xmlns="http://www.w3.org/2000/svg" focusable="false">' +
+           '<g transform="translate(200,200)">' + s + "</g></svg>";
+  }
+
+  /* Small emblem for cards, pickers and the navbar. Petals are much fatter
+     than the hero's — thin ones turn into a sparkle at 44px. */
+  function seal(o) {
+    o = o || {};
+    return pookalam({
+      counts: (o.counts || [8, 14]).slice(0, 2),
+      hue: o.hue,
+      circuit: o.circuit === true,
+      solid: true,
+      bands: [
+        { r0: 30, r1: 112, w: 36 },
+        { r0: 104, r1: 182, w: 26 }
+      ],
+      label: o.label || "Event emblem"
+    });
+  }
+
+  global.Pookalam = { draw: pookalam, seal: seal };
+})(window);
+
+</script>
+<script>
+/* ============================================================================
+   TECHAVAM 2026 — SHARED + HOME PAGE SCRIPT
+   All page content comes from js/config.js. Nothing here needs editing.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  /* ---------- helpers ---------------------------------------------------- */
+
+  /* Show real information if it exists, otherwise a visible "not filled in
+     yet" chip. The site never invents a date, venue, name or number. */
+  function orTodo(value, label) {
+    return value ? esc(value) : '<span class="todo">ADD ' + label + '</span>';
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  /* ---------- navigation ------------------------------------------------- */
+  function initNav() {
+    var nav = $("#nav"), toggle = $("#navToggle"), links = $("#navLinks");
+    if (!nav || !toggle) return;
+
+    toggle.addEventListener("click", function () {
+      var open = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    });
+
+    /* tapping a link closes the mobile sheet */
+    if (links) {
+      links.addEventListener("click", function (e) {
+        if (e.target.closest("a")) {
+          nav.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") nav.classList.remove("is-open");
+    });
+  }
+
+  /* ---------- scroll reveal --------------------------------------------- */
+  function initReveal() {
+    var items = $$(".rev");
+    if (!items.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (el) { el.classList.add("is-in"); });
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        setTimeout(function () { el.classList.add("is-in"); }, i * 70);
+        io.unobserve(el);
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------- emblems ---------------------------------------------------- */
+  function initSeals() {
+    var hero = $('[data-pookalam="hero"]');
+    if (hero) hero.innerHTML = Pookalam.draw({ counts: [8, 14, 20], hue: "gold", label: "TECHAVAM pookalam" });
+
+    $$('[data-seal="nav"]').forEach(function (el) {
+      el.innerHTML = Pookalam.seal({ counts: [6, 12], hue: "gold", label: "Technocrats" });
+    });
+  }
+
+  /* ---------- home page content ----------------------------------------- */
+  function renderHome() {
+    var grid = $("#eventGrid");
+    if (!grid) return;   /* not the home page */
+
+    /* hero meta line */
+    $("#heroMeta").innerHTML = [
+      "<li><b>" + orTodo(FEST.date, "DATE") + "</b></li>",
+      "<li><b>" + orTodo(FEST.venue, "VENUE") + "</b></li>",
+      "<li>2nd &amp; 3rd year IT only</li>",
+      "<li>Teams of up to <b>4</b></li>"
+    ].join("");
+
+    /* marquee — what the day is made of, doubled so the loop is seamless */
+    var themes = ["Technology", "Kerala culture", "Creativity", "Teamwork",
+                  "Problem solving", "Entrepreneurship", "Digital art"];
+    var run = themes.map(function (t) { return "<span>" + t + " <b>✦</b></span>"; }).join("");
+    $("#strip").innerHTML = run + run;
+
+    /* club introduction */
+    $("#clubIntro").innerHTML = CLUB.intro.map(function (p) {
+      return "<p>" + esc(p).replace(/\[([^\]]+)\]/g, '<span class="todo">$1</span>') + "</p>";
+    }).join("");
+
+    /* event cards */
+    grid.innerHTML = EVENTS.map(function (ev) {
+      return '' +
+        '<article class="card rev">' +
+          '<div class="card__top">' +
+            '<span class="card__slot">' + esc(ev.slot) + " · " + esc(ev.time.split("–")[0].trim()) + '</span>' +
+            '<span class="card__seal">' + Pookalam.seal({ counts: ev.seal.rings, hue: ev.seal.hue, label: ev.name + " emblem" }) + '</span>' +
+          '</div>' +
+          '<h3 class="card__name">' + esc(ev.name) + '</h3>' +
+          '<p class="card__tagline">' + esc(ev.tagline) + '</p>' +
+          '<p class="card__text">' + esc(ev.teaser) + '</p>' +
+          '<div class="card__tags">' + ev.tags.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("") + '</div>' +
+          '<div class="card__foot">' +
+            '<span class="card__time">' + esc(ev.time) + '</span>' +
+            '<a class="btn btn--ghost" href="#/register/' + encodeURIComponent(ev.id) + '">' +
+              'Click here to register <span class="btn__arrow">→</span></a>' +
+          '</div>' +
+        '</article>';
+    }).join("");
+
+    /* schedule */
+    $("#schedRows").innerHTML = SCHEDULE.map(function (s) {
+      return '<div class="sched__row' + (s.kind === "break" ? " sched__row--break" : "") + '">' +
+               '<p class="sched__label">' + esc(s.label) + "</p>" +
+               "<div><p class=\"sched__time\">" + esc(s.time) + "</p>" +
+               '<p class="sched__what">' + esc(s.events) + "</p></div>" +
+             "</div>";
+    }).join("");
+
+    /* footer contact */
+    $("#footContact").innerHTML = [
+      "Coordinator: <b>" + orTodo(FEST.contactName, "NAME") + "</b>",
+      "Phone: <b>" + orTodo(FEST.contactPhone, "PHONE") + "</b>",
+      "Mail: <b>" + orTodo(FEST.contactEmail, "EMAIL") + "</b>"
+    ].join("<br>");
+  }
+
+  /* expose helpers for the registration page */
+  window.TA = { orTodo: orTodo, esc: esc, $: $, $$: $$ };
+
+  document.addEventListener("DOMContentLoaded", function () {
+    initNav();
+    initSeals();
+    renderHome();
+    initReveal();
+  });
+})();
+
+</script>
+<script>
+/* ============================================================================
+   TECHAVAM 2026 — REGISTRATION PAGE
+   ----------------------------------------------------------------------------
+   Renders the four events from js/config.js, and generates a REAL QR code for
+   the selected event using the qrcodejs library loaded in registration.html.
+   Each QR encodes exactly the same URL its button opens — one per event.
+   Nothing here needs editing.
+   ========================================================================== */
+
+(function () {
+  "use strict";
+
+  var esc = TA.esc, orTodo = TA.orTodo, $ = TA.$;
+  var picker, panel, current = null;
+
+  /* ---------- markup for one event -------------------------------------- */
+  function panelHTML(ev) {
+    var ready = isFormLinkReady(ev.formUrl);
+
+    var sequence = ev.checkpoints || ev.levels;
+    var seqTitle = ev.checkpoints ? "Checkpoints" : (ev.levels ? "Levels" : "");
+    var seqHTML = sequence ? (
+      '<div class="block"><p class="block__h">' + seqTitle + ' · cleared in order</p>' +
+      '<ul class="steps">' + sequence.map(function (s) {
+        return "<li><b>" + esc(s.n) + "</b><i>" + esc(s.label) + "</i><span>" + esc(s.text) + "</span></li>";
+      }).join("") + "</ul></div>"
+    ) : "";
+
+    var qrHTML = ready
+      ? '<div class="qr__box" id="qrBox"></div>' +
+        '<p class="qr__cap">Scan to open the ' + esc(ev.name) + ' form</p>'
+      : '<div class="qr__box qr__box--empty">QR appears once this event\'s Google Form link is added to <br>FORM_LINKS in this file → ' + esc(ev.id) + '</div>';
+
+    var ctaHTML = ready
+      ? '<a class="btn btn--gold" href="' + esc(ev.formUrl) + '" target="_blank" rel="noopener noreferrer">' +
+        'Open Google Form <span class="btn__arrow">→</span></a>'
+      : '<span class="btn btn--gold" aria-disabled="true">Form link not added yet</span>';
+
+    var notice = ready ? "" :
+      '<p class="notice">Search this file for FORM_LINKS and replace <b>' +
+      esc(FORM_LINKS[ev.id]) + '</b> with this event\'s Google Form link. ' +
+      'The button and the QR both read from that one value.</p>';
+
+    return '' +
+      '<div class="panel__main">' +
+        '<h2 class="panel__name">' + esc(ev.name) + "</h2>" +
+        '<p class="panel__tagline">' + esc(ev.tagline) + "</p>" +
+        '<p class="panel__text">' + esc(ev.description) + "</p>" +
+
+        '<div class="facts">' +
+          '<div class="fact"><span>Slot</span><b>' + esc(ev.slot) + "</b></div>" +
+          '<div class="fact"><span>Timing</span><b>' + esc(ev.time) + "</b></div>" +
+          '<div class="fact"><span>Team size</span><b>1 – 4 members</b></div>' +
+          '<div class="fact"><span>Eligibility</span><b>IT · 2nd &amp; 3rd year</b></div>' +
+        "</div>" +
+
+        seqHTML +
+
+        '<div class="block"><p class="block__h">What your team submits</p><ul class="list">' +
+          ev.deliverables.map(function (d) { return "<li>" + esc(d) + "</li>"; }).join("") +
+        "</ul></div>" +
+
+        '<div class="block"><p class="block__h">Rules</p><ul class="list">' +
+          ev.rules.map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") +
+        "</ul></div>" +
+      "</div>" +
+
+      '<aside class="rail"><div class="qr">' +
+        '<p class="qr__h">Register for ' + esc(ev.name) + "</p>" +
+        qrHTML +
+        '<div class="qr__cta">' + ctaHTML + "</div>" +
+        notice +
+      "</div></aside>";
+  }
+
+  /* ---------- QR ---------------------------------------------------------- */
+  function drawQR(ev) {
+    var box = $("#qrBox");
+    if (!box) return;                       /* link not added yet */
+
+    if (typeof QRCode === "undefined") {    /* library blocked or offline */
+      box.className = "qr__box qr__box--empty";
+      box.innerHTML = "QR library did not load. Check the connection — the Open Google Form button still works.";
+      return;
+    }
+
+    box.innerHTML = "";
+    new QRCode(box, {
+      text: ev.formUrl,                     /* exactly the URL the button opens */
+      width: 168,
+      height: 168,
+      colorDark: "#180B2C",
+      colorLight: "#F8F0DF",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+    var img = box.querySelector("img, canvas");
+    if (img) img.setAttribute("alt", "QR code for the " + ev.name + " registration form");
+  }
+
+  /* ---------- selection --------------------------------------------------- */
+  function select(id, push) {
+    var ev = EVENTS.filter(function (e) { return e.id === id; })[0] || EVENTS[0];
+    if (current === ev.id) return;
+    current = ev.id;
+
+    TA.$$(".pick", picker).forEach(function (btn) {
+      btn.setAttribute("aria-selected", btn.dataset.id === ev.id ? "true" : "false");
+      btn.tabIndex = btn.dataset.id === ev.id ? 0 : -1;
+    });
+
+    panel.innerHTML = panelHTML(ev);
+    drawQR(ev);
+
+    /* keep the URL shareable without stacking history entries, so the browser
+       back button returns to wherever the visitor came from */
+    if (push !== false && window.history.replaceState) {
+      window.history.replaceState({}, "", "#/register/" + encodeURIComponent(ev.id));
+    }
+  }
+
+  window.__selectEvent = select;
+
+  /* ---------- build ------------------------------------------------------- */
+  document.addEventListener("DOMContentLoaded", function () {
+    picker = $("#picker");
+    panel  = $("#panel");
+    if (!picker || !panel) return;
+
+    picker.innerHTML = EVENTS.map(function (ev) {
+      return '<button class="pick" type="button" role="tab" data-id="' + esc(ev.id) + '" ' +
+             'aria-selected="false" aria-controls="panel" tabindex="-1">' +
+               '<span class="pick__seal">' + Pookalam.seal({ counts: ev.seal.rings, hue: ev.seal.hue, label: "" }) + "</span>" +
+               '<span><span class="pick__name">' + esc(ev.name) + "</span><br>" +
+               '<span class="pick__slot">' + esc(ev.slot) + "</span></span>" +
+             "</button>";
+    }).join("");
+
+    picker.addEventListener("click", function (e) {
+      var btn = e.target.closest(".pick");
+      if (btn) { select(btn.dataset.id); panel.focus({ preventScroll: true }); }
+    });
+
+    /* left/right arrows move between events, as a tablist should */
+    picker.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      var ids = EVENTS.map(function (ev) { return ev.id; });
+      var i = ids.indexOf(current);
+      var next = ids[(i + (e.key === "ArrowRight" ? 1 : ids.length - 1)) % ids.length];
+      select(next);
+      TA.$('.pick[data-id="' + next + '"]', picker).focus();
+      e.preventDefault();
+    });
+
+    /* day timing + placeholders */
+    $("#rMeta").innerHTML = [
+      "<li><b>" + orTodo(FEST.date, "DATE") + "</b></li>",
+      "<li><b>" + orTodo(FEST.venue, "VENUE") + "</b></li>",
+      "<li>Registration closes at the start of each slot</li>"
+    ].join("");
+
+    $("#rSchedRows").innerHTML = SCHEDULE.map(function (s) {
+      return '<div class="sched__row' + (s.kind === "break" ? " sched__row--break" : "") + '">' +
+               '<p class="sched__label">' + esc(s.label) + "</p>" +
+               '<div><p class="sched__time">' + esc(s.time) + "</p>" +
+               '<p class="sched__what">' + esc(s.events) + "</p></div></div>";
+    }).join("");
+
+    /* deep link: registration.html?event=code opens Code Questers directly */
+    var wanted = (window.location.hash.match(/#\/register\/([a-z]+)/) || [])[1];
+    select(wanted || EVENTS[0].id, false);
+  });
+})();
+
+</script>
+<script>
+
+/* ============================================================================
+   SINGLE-FILE ROUTER
+   #/            → home        #/register        → registration
+   #/register/ID → registration with that event open
+   Real history entries, so the browser back button behaves normally.
+   ========================================================================== */
+(function () {
+  "use strict";
+  var TITLES = {
+    home: "TECHAVAM 2026 — Technocrats | IT Department Onam Celebration",
+    reg:  "Register — TECHAVAM 2026 | Technocrats"
+  };
+
+  function jump() { window.scrollTo(0, 0); }
+
+  function route() {
+    var home = document.getElementById("page-home");
+    var reg  = document.getElementById("page-register");
+    if (!home || !reg) return;
+
+    var h = window.location.hash || "";
+    var isReg = h.indexOf("#/register") === 0;
+
+    home.hidden = isReg;
+    reg.hidden = !isReg;
+    document.title = isReg ? TITLES.reg : TITLES.home;
+
+    if (isReg) {
+      var m = h.match(/#\/register\/([a-z]+)/);
+      if (m && window.__selectEvent) window.__selectEvent(m[1], false);
+      jump();
+      return;
+    }
+    /* plain section anchor like #events — show home, then jump to it */
+    if (h && h.length > 1 && h.charAt(1) !== "/") {
+      var target = document.querySelector(h);
+      if (target) { target.scrollIntoView({ behavior: "smooth" }); return; }
+    }
+    jump();
+  }
+
+  window.addEventListener("hashchange", route);
+  document.addEventListener("DOMContentLoaded", route);
+})();
+
+</script>
+</body>
+</html>
