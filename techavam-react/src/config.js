@@ -1,35 +1,54 @@
-// TECHAVAM 2026 — Configuration
-// Edit ONLY this file to customise dates, links, venues and contact details.
+// TECHAVAM 2026 — Centralized Event & Registration Configuration
+// Event Google Form Responder URLs (Public)
 
 export const FORM_LINKS = {
-  startup:  'STARTUP_MAVELI_GOOGLE_FORM_URL',
-  pookolam: 'DIGITAL_POOKOLAM_GOOGLE_FORM_URL',
-  race:     'TECH_KERALA_AMAZING_RACE_GOOGLE_FORM_URL',
-  code:     'CODE_QUESTERS_GOOGLE_FORM_URL',
+  startup:
+    'https://docs.google.com/forms/d/e/1FAIpQLSeUfZU6-znHvfK6MuZMve3jfsEjebHqxxqg41jzUXKTxaTc0g/viewform?usp=sharing&ouid=101931112181900490676',
+  pookolam:
+    'https://docs.google.com/forms/d/e/1FAIpQLSc3KCHkyLhfGrIsoehLBKVtHjPEL2MseuGtxqX_TDVXifI0dg/viewform?usp=sharing&ouid=101931112181900490676',
+  race:
+    'https://docs.google.com/forms/d/e/1FAIpQLSfQcdfkQIe1yu0pm_mKE85KImLpx_lsBD1uk0RoEaKNHWtJlw/viewform?usp=sharing&ouid=101931112181900490676',
+  code:
+    'https://docs.google.com/forms/d/e/1FAIpQLSdLj_X9WyI0KnGNioEBnaScsQJf_jr3_2QWe5kmDbhRgjIfvg/viewform?usp=sharing&ouid=101931112181900490676',
 };
 
 export const FEST = {
-  date:         null,   // e.g. 'Saturday, 12 September 2026'
-  venue:        null,   // e.g. 'IT Block, Seminar Hall'
-  contactName:  null,
+  date: 'September 2026',
+  venue: 'IT Department Block',
+  contactName: 'Technocrats Coordinator',
   contactPhone: null,
   contactEmail: null,
-  instagram:    null,
+  instagram: null,
 };
 
 export const CLUB = {
   name: 'Technocrats',
   role: 'IT Department Student Club',
   intro: [
-    '[ADD OFFICIAL CLUB INTRODUCTION HERE] Technocrats is a student-driven initiative of the Information Technology department, built around technology, innovation, creativity, collaboration and student development.',
-    'TECHAVAM 2026 is our department-level Onam celebration — a day where students take on technology-driven, creative and culturally inspired challenges together.',
+    'Technocrats is a student-driven initiative of the Information Technology department, built around technology, innovation, creativity, collaboration, and student excellence.',
+    'TECHAVAM 2026 is our department-level Onam celebration — a morning where 2nd and 3rd year IT students take on technology-driven, creative, and culturally inspired challenges together.',
   ],
 };
 
 export const SCHEDULE = [
-  { label: 'Slot 1', time: '8:45 – 10:45 AM',    events: 'Startup Maveli · Amazing Race',      kind: 'slot'  },
-  { label: 'Break',  time: '10:45 – 11:15 AM',   events: 'Refreshments',                        kind: 'break' },
-  { label: 'Slot 2', time: '11:30 AM – 1:30 PM', events: 'Digital Pookolam · Code Questers',   kind: 'slot'  },
+  {
+    label: 'Slot 1',
+    time: '8:45 – 10:45 AM',
+    events: 'Startup Maveli · Amazing Race',
+    kind: 'slot',
+  },
+  {
+    label: 'Break',
+    time: '10:45 – 11:15 AM',
+    events: 'Refreshments & Cultural Gather',
+    kind: 'break',
+  },
+  {
+    label: 'Slot 2',
+    time: '11:30 AM – 1:30 PM',
+    events: 'Digital Pookolam · Code Questers',
+    kind: 'slot',
+  },
 ];
 
 export const EVENTS = [
@@ -39,26 +58,28 @@ export const EVENTS = [
     tagline: 'Modernising Onam through innovation',
     slot: 'Slot 1',
     time: '8:45 – 10:45 AM',
-    teaser: 'Mahabali is back in 2026 and he wants Onam upgraded. Build the startup that does it.',
+    teaser:
+      'Mahabali is back in 2026 and he wants Onam upgraded. Build the startup prototype that does it.',
     description:
-      'Mahabali has returned in 2026 and wants to modernise Onam. Your team builds a technology startup that solves a real Onam or Kerala problem — then pitches it like a founder. MaveliGPT, SadhyaAI, Pookalam-as-a-Service, Smart Vadamvali, an Onam event app, an AI Onam assistant: the idea is yours, the ambition is the point.',
+      'Mahabali has returned in 2026 and wants to modernise Onam. Build a technology startup idea that solves a real Onam or Kerala problem — then pitch it like a founder. MaveliGPT, SadhyaAI, Pookalam-as-a-Service, Smart Vadamvali, or an AI Onam assistant: the idea is yours, the ambition is the point.',
     deliverables: [
-      'Startup name and logo',
-      'Problem statement and solution',
-      'A website or app prototype',
-      'Business model',
-      'A short pitch to the panel',
+      'Startup name and concept',
+      'Problem statement and technology solution',
+      'A website, app, or UI prototype',
+      'Business model & value proposition',
+      'A short pitch presentation to the panel',
     ],
     rules: [
-      'Teams of 1 to 4 members.',
-      'Bring your own laptop; the department provides power and Wi-Fi.',
-      'The idea must connect to Onam, Kerala or the celebration itself.',
-      'AI tools are allowed — say so in your pitch.',
-      'Pitch time is capped; the panel stops you when it ends.',
+      'Open exclusively to 2nd & 3rd Year IT students.',
+      'Individual registration per participant.',
+      'Bring your own laptop; power and Wi-Fi are provided.',
+      'The idea must connect to Onam, Kerala, or culture & technology.',
+      'AI tools and frameworks are allowed — cite them in your pitch.',
+      'Pitch presentation time is strictly capped.',
     ],
     tags: ['Innovation', 'Entrepreneurship', 'AI', 'Prototype'],
     seal: { rings: [8, 12, 16], hue: 'gold' },
-    formUrl: 'STARTUP_MAVELI_GOOGLE_FORM_URL',
+    formUrl: FORM_LINKS.startup,
   },
   {
     id: 'pookolam',
@@ -66,24 +87,26 @@ export const EVENTS = [
     tagline: 'Where tradition meets digital creativity',
     slot: 'Slot 2',
     time: '11:30 AM – 1:30 PM',
-    teaser: 'The same flowers, the same rings, none of the flowers. Draw the pookalam on a screen.',
+    teaser:
+      'The same floral rings, none of the physical petals. Design the festive pookalam on a digital canvas.',
     description:
-      'A theme-based digital art competition built on the traditional Kerala pookalam. The theme is announced at the start of the slot — Technology Meets Tradition, Kerala 2050, Digital Mahabali, Green Onam, AI Meets Kerala, Onam in Space are the kind of prompts to expect.',
+      'A theme-based digital art competition built on the traditional Kerala pookalam. The theme is announced at the start of the slot — Technology Meets Tradition, Kerala 2050, Digital Mahabali, Green Onam, or AI Meets Culture are the kind of prompts to expect.',
     deliverables: [
-      'One digital pookalam on the announced theme',
-      'Any hidden elements the organisers add mid-slot',
-      'A one-line description of your concept',
+      'One high-resolution digital pookalam on the announced theme',
+      'Any hidden design elements specified at the slot kickoff',
+      'A concise one-line description of your creative concept',
     ],
     rules: [
-      'Teams of 1 to 4 members.',
-      'Any software you like — Figma, Illustrator, Procreate, Blender, code.',
-      'The theme is revealed only when the slot begins.',
-      'Work must be created during the slot. Pre-made art is disqualified.',
-      'Submit as PNG or JPG at the size announced by the organisers.',
+      'Open exclusively to 2nd & 3rd Year IT students.',
+      'Individual registration per participant.',
+      'Any digital tool allowed — Figma, Illustrator, Photoshop, Procreate, Blender, or code/SVG/Canvas.',
+      'The specific prompt is revealed when the slot begins.',
+      'All artwork must be created live during the slot. Pre-made templates are disqualified.',
+      'Submit as PNG, JPG, or SVG at the specified resolution.',
     ],
     tags: ['Digital Art', 'Design', 'Creativity', 'Onam'],
     seal: { rings: [6, 12, 18], hue: 'marigold' },
-    formUrl: 'DIGITAL_POOKOLAM_GOOGLE_FORM_URL',
+    formUrl: FORM_LINKS.pookolam,
   },
   {
     id: 'race',
@@ -91,33 +114,35 @@ export const EVENTS = [
     tagline: 'Solve · Scan · Run · Discover',
     slot: 'Slot 1',
     time: '8:45 – 10:45 AM',
-    teaser: 'Seven checkpoints across the department. Code, culture, QR codes and your legs.',
+    teaser:
+      'Seven checkpoints across the department block. Code, culture, QR codes, and quick thinking.',
     description:
-      'A hybrid treasure hunt: part debugging, part Kerala trivia, part physical challenge. Teams move checkpoint to checkpoint, and each one only opens after you clear the last. The final checkpoint is Mahabali himself.',
+      'A hybrid treasure hunt: part debugging, part Kerala cultural trivia, and part physical challenge. Move checkpoint to checkpoint across the department block — each one unlocks only after you solve and clear the previous one.',
     checkpoints: [
-      { n: '01', label: 'Coding',   text: 'Fix a small bug to move on.' },
-      { n: '02', label: 'Kerala',   text: 'Identify a traditional item, song, place or personality.' },
-      { n: '03', label: 'QR',       text: 'Scan the code, solve the clue it hides.' },
-      { n: '04', label: 'Physical', text: 'A short team challenge. No shortcuts.' },
-      { n: '05', label: 'AI',       text: 'Prompt your way past an AI task.' },
-      { n: '06', label: 'Logic',    text: 'A puzzle that does not care how fast you type.' },
-      { n: '07', label: 'Mahabali', text: 'Find him. Recover the treasure. Finish.' },
+      { n: '01', label: 'Coding', text: 'Fix a small bug to unlock your next clue.' },
+      { n: '02', label: 'Kerala', text: 'Identify a traditional Kerala item, song, or landmark.' },
+      { n: '03', label: 'QR Clue', text: 'Scan the hidden QR code and solve its riddle.' },
+      { n: '04', label: 'Physical', text: 'A short physical team task. No shortcuts.' },
+      { n: '05', label: 'AI Task', text: 'Prompt and debug an AI puzzle challenge.' },
+      { n: '06', label: 'Logic', text: 'A logic puzzle that tests reasoning over speed.' },
+      { n: '07', label: 'Mahabali', text: 'Find Mahabali, recover the final token, and finish.' },
     ],
     deliverables: [
-      'Clear all checkpoints in order',
-      'Collect the token issued at each checkpoint',
-      'Reach the final checkpoint before the slot closes',
+      'Clear all seven checkpoints in sequential order',
+      'Collect the verification token issued at each checkpoint',
+      'Reach the finish line before the slot closes',
     ],
     rules: [
-      'Teams of 1 to 4 members.',
-      'Carry one charged phone with a working QR scanner.',
+      'Open exclusively to 2nd & 3rd Year IT students.',
+      'Individual registration per participant.',
+      'Carry one charged smartphone with an active camera/QR scanner.',
       'Checkpoints must be cleared in order — skipping voids the run.',
-      'Wear something you can move in.',
-      'Volunteer decisions at a checkpoint are final.',
+      'Wear comfortable attire for movement.',
+      'Volunteer and checkpoint judge decisions are final.',
     ],
-    tags: ['Treasure Hunt', 'QR', 'Technology', 'Kerala', 'Teamwork'],
+    tags: ['Treasure Hunt', 'QR', 'Technology', 'Kerala', 'Logic'],
     seal: { rings: [10, 10, 20], hue: 'lavender' },
-    formUrl: 'TECH_KERALA_AMAZING_RACE_GOOGLE_FORM_URL',
+    formUrl: FORM_LINKS.race,
   },
   {
     id: 'code',
@@ -125,32 +150,34 @@ export const EVENTS = [
     tagline: 'Crack the code · Complete the quest',
     slot: 'Slot 2',
     time: '11:30 AM – 1:30 PM',
-    teaser: 'Six locked levels. Clearing one is the only way to see the next.',
+    teaser:
+      'Six progressive locked levels. Solving one is the only way to unlock the next.',
     description:
-      'Not a conventional programming contest — a progressive quest. Every level is a different kind of thinking, and each one you clear unlocks the one after it. You will not see level six until level five falls.',
+      'Not a conventional coding contest — a progressive quest. Every level tests a distinct facet of problem-solving, algorithmic thinking, and debugging. Level six remains locked until level five falls.',
     levels: [
-      { n: '01', label: 'Bug Hunt',          text: 'Find what is broken.' },
-      { n: '02', label: 'Output Prediction', text: 'Read the code. Say what it prints.' },
-      { n: '03', label: 'Logic Quest',       text: 'Reason it out before you type.' },
-      { n: '04', label: 'Code Breaker',      text: 'Decode what is hidden.' },
-      { n: '05', label: 'Speed Coding',      text: 'Correct, and fast.' },
-      { n: '06', label: 'Final Code',        text: 'Everything above, at once.' },
+      { n: '01', label: 'Bug Hunt', text: 'Identify and fix logic errors in broken code.' },
+      { n: '02', label: 'Output Prediction', text: 'Analyze tricky snippets and determine exact output.' },
+      { n: '03', label: 'Logic Quest', text: 'Derive algorithmic solutions before coding.' },
+      { n: '04', label: 'Code Breaker', text: 'Decode hidden patterns and ciphers.' },
+      { n: '05', label: 'Speed Coding', text: 'Write optimal, clean solutions against the clock.' },
+      { n: '06', label: 'Final Quest', text: 'The ultimate synthesis challenge.' },
     ],
     deliverables: [
-      'Clear each level to unlock the next',
-      'Working solutions, not pseudocode',
-      'Finish as far as you can before the slot closes',
+      'Clear each quest level to unlock subsequent challenges',
+      'Submit working code solutions with correct test cases',
+      'Finish as many levels as possible before the slot timer expires',
     ],
     rules: [
-      'Teams of 1 to 4 members.',
-      'Language of your choice unless a level says otherwise.',
-      'Levels unlock in sequence — no jumping ahead.',
-      'Ranking is by levels cleared, then by time.',
-      'AI assistants are not allowed inside this event.',
+      'Open exclusively to 2nd & 3rd Year IT students.',
+      'Individual registration per participant.',
+      'Programming languages: Python, C++, Java, C, or JavaScript.',
+      'Levels unlock strictly in sequence.',
+      'Ranking is evaluated by total levels cleared, then by total completion time.',
+      'External AI coding assistants are prohibited during this contest.',
     ],
-    tags: ['Coding', 'Debugging', 'Logic', 'Problem Solving'],
+    tags: ['Coding', 'Debugging', 'Algorithms', 'Logic'],
     seal: { rings: [4, 16, 24], hue: 'violet' },
-    formUrl: 'CODE_QUESTERS_GOOGLE_FORM_URL',
+    formUrl: FORM_LINKS.code,
   },
 ];
 

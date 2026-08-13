@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { EVENTS, SCHEDULE, FEST, isFormLinkReady } from '../config.js';
+import { useState, useEffect } from 'react';
+import { EVENTS, SCHEDULE, FEST } from '../config.js';
 import { seal } from '../pookalam.js';
+import EventQRCode from './EventQRCode.jsx';
 
-function Todo({ label }) {
+function MetaItem({ value, label }) {
+  if (value) return <b>{value}</b>;
   return <span className="todo">ADD {label}</span>;
 }
 
@@ -37,7 +39,6 @@ function Sequence({ items, title }) {
 }
 
 function EventPanel({ event }) {
-  const ready = isFormLinkReady(event.formUrl);
   const sequence = event.checkpoints || event.levels;
   const seqTitle = event.checkpoints ? 'Checkpoints' : 'Levels';
 
@@ -50,66 +51,80 @@ function EventPanel({ event }) {
         <p className="panel__text">{event.description}</p>
 
         <div className="facts">
-          <div className="fact"><span>Slot</span><b>{event.slot}</b></div>
-          <div className="fact"><span>Timing</span><b>{event.time}</b></div>
-          <div className="fact"><span>Team size</span><b>1 – 4 members</b></div>
-          <div className="fact"><span>Eligibility</span><b>IT · 2nd &amp; 3rd year</b></div>
+          <div className="fact">
+            <span>Slot</span>
+            <b>{event.slot}</b>
+          </div>
+          <div className="fact">
+            <span>Timing</span>
+            <b>{event.time}</b>
+          </div>
+          <div className="fact">
+            <span>Registration</span>
+            <b>Individual Entry</b>
+          </div>
+          <div className="fact">
+            <span>Eligibility</span>
+            <b>IT · 2nd &amp; 3rd Year</b>
+          </div>
         </div>
 
         <Sequence items={sequence} title={seqTitle} />
 
         <div className="block">
-          <p className="block__h">What your team submits</p>
+          <p className="block__h">What you submit</p>
           <ul className="list">
-            {event.deliverables.map((d, i) => <li key={i}>{d}</li>)}
+            {event.deliverables.map((d, i) => (
+              <li key={i}>{d}</li>
+            ))}
           </ul>
         </div>
 
         <div className="block">
-          <p className="block__h">Rules</p>
+          <p className="block__h">Rules &amp; Guidelines</p>
           <ul className="list">
-            {event.rules.map((r, i) => <li key={i}>{r}</li>)}
+            {event.rules.map((r, i) => (
+              <li key={i}>{r}</li>
+            ))}
           </ul>
         </div>
       </div>
 
-      {/* Sidebar */}
+      {/* Registration Sidebar with Scannable QR & Register Now Button */}
       <aside className="rail">
-        <div className="qr">
-          <p className="qr__h">Register for {event.name}</p>
-          {ready ? (
-            <>
-              <div className="qr__box qr__box--empty" style={{ fontSize: '11px', lineHeight: 1.6 }}>
-                QR code displayed when Google Form link is active.
-              </div>
-              <p className="qr__cap">Scan or click to open the {event.name} form</p>
-            </>
-          ) : (
-            <div className="qr__box qr__box--empty">
-              QR appears once this event's Google Form link is added to FORM_LINKS in config.js → {event.id}
-            </div>
-          )}
-          <div className="qr__cta">
-            {ready ? (
-              <a
-                className="btn btn--gold"
-                href={event.formUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Open Google Form <span className="btn__arrow">→</span>
-              </a>
-            ) : (
-              <span className="btn btn--gold" aria-disabled="true">
-                Form link not added yet
-              </span>
-            )}
-          </div>
-          {!ready && (
-            <p className="notice">
-              Search config.js for FORM_LINKS and replace <b>{event.formUrl}</b> with this event's Google Form link. The button and QR both read from that one value.
+        <div className="qr-container">
+          <div className="qr-container__header">
+            <span className="qr-container__badge">{event.slot}</span>
+            <h3 className="qr-container__title">{event.name}</h3>
+            <p className="qr-container__instruction">
+              Scan the QR code or click <strong>Register Now</strong> to submit your registration.
             </p>
-          )}
+          </div>
+
+          {/* QR Code */}
+          <div className="qr-container__code">
+            <EventQRCode url={event.formUrl} eventName={event.name} size={180} />
+          </div>
+
+          <div className="qr-container__divider">
+            <span>OR</span>
+          </div>
+
+          {/* Direct Button */}
+          <div className="qr-container__action">
+            <a
+              className="btn btn--gold btn--full"
+              href={event.formUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open registration form for ${event.name} in new tab`}
+            >
+              REGISTER NOW <span className="btn__arrow">→</span>
+            </a>
+            <p className="qr-container__hint">
+              Opens the official Google Form in a new tab. Individual registration.
+            </p>
+          </div>
         </div>
       </aside>
     </>
@@ -137,20 +152,23 @@ export default function RegisterPage({ initialEvent, onBack }) {
           </button>
           <h1 className="rhero__title">Register for TECHAVAM 2026</h1>
           <p className="rhero__sub">
-            Choose your event, read what it actually involves, then open its form. Each
-            event has its own form — scanning the wrong one puts your team in the wrong event.
+            Each event has its own dedicated Google Form. Select your challenge below, scan the QR code, or click <strong>Register Now</strong> to participate.
           </p>
           <ul className="hero__meta" style={{ marginTop: '26px' }}>
-            <li><b>{FEST.date || <Todo label="DATE" />}</b></li>
-            <li><b>{FEST.venue || <Todo label="VENUE" />}</b></li>
-            <li>Registration closes at the start of each slot</li>
+            <li>
+              <MetaItem value={FEST.date} label="DATE" />
+            </li>
+            <li>
+              <MetaItem value={FEST.venue} label="VENUE" />
+            </li>
+            <li>2nd &amp; 3rd Year IT Students Only</li>
           </ul>
         </div>
       </section>
 
       <section style={{ paddingBottom: 'clamp(70px,10vw,120px)' }}>
         <div className="wrap">
-          {/* Event picker */}
+          {/* Event picker tabs */}
           <div className="picker" role="tablist" aria-label="Choose an event">
             {EVENTS.map((ev) => {
               const sealHtml = seal({ counts: ev.seal.rings, hue: ev.seal.hue, label: '' });
@@ -164,14 +182,12 @@ export default function RegisterPage({ initialEvent, onBack }) {
                   tabIndex={selectedId === ev.id ? 0 : -1}
                   onClick={() => setSelectedId(ev.id)}
                   onKeyDown={(e) => {
-                    const ids = EVENTS.map((ev) => ev.id);
+                    const ids = EVENTS.map((item) => item.id);
                     const i = ids.indexOf(selectedId);
                     if (e.key === 'ArrowRight') {
-                      const next = ids[(i + 1) % ids.length];
-                      setSelectedId(next);
+                      setSelectedId(ids[(i + 1) % ids.length]);
                     } else if (e.key === 'ArrowLeft') {
-                      const prev = ids[(i + ids.length - 1) % ids.length];
-                      setSelectedId(prev);
+                      setSelectedId(ids[(i + ids.length - 1) % ids.length]);
                     }
                   }}
                 >
@@ -196,7 +212,7 @@ export default function RegisterPage({ initialEvent, onBack }) {
 
           {/* Schedule */}
           <div className="sched" style={{ marginTop: '56px' }}>
-            <p className="eyebrow">Timing on the day</p>
+            <p className="eyebrow">Event Timing on the Day</p>
             {SCHEDULE.map((s, i) => (
               <ScheduleRow key={i} row={s} />
             ))}
