@@ -64,7 +64,7 @@ function EventCard({ event, onRegister }) {
             onRegister(event.id);
           }}
         >
-          Click here to register <span className="btn__arrow">→</span>
+          REGISTER NOW <span className="btn__arrow">→</span>
         </a>
       </div>
     </article>
