@@ -96,7 +96,7 @@ export default function HeroSection({ onNavigate }) {
                 document.querySelector('#events')?.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              See the four events
+              Visit the events
             </a>
           </div>
 
