@@ -1168,6 +1168,22 @@ h1, h2, h3, h4 {
   0%, 100% { filter: drop-shadow(0 0 6px rgba(232,180,79,.6)); }
   50%       { filter: drop-shadow(0 0 18px rgba(232,180,79,1)) drop-shadow(0 0 30px rgba(240,138,60,.6)); }
 }
+/* GPU hardware-accelerated transforms for 60fps rendering without CPU redraws */
+.ring,
+.strip__track,
+.kathakali-face,
+.kathakali-eyes,
+.kathakali-crown,
+.kathakali-wrapper,
+.rangoli-wrapper,
+.hero__petal,
+.hero__decor {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 .kathakali-face { animation: sway 5s ease-in-out infinite; transform-origin: center bottom; }
 .kathakali-eyes { animation: blink 4s ease-in-out infinite; transform-origin: center center; }
 .kathakali-crown { animation: crown-shimmer 3s ease-in-out infinite; }
