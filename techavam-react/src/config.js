@@ -160,7 +160,7 @@ export const EVENTS = [
     name: 'CricBid: The IPL Mega Auction',
     tagline: 'Strategy · ₹100 Cr Purse · Assemble the Championship XI',
     slot: 'Slot 2',
-    time: '11:30 AM – 1:30 PM',
+    time: '8:30 AM – 1:30 PM',
     teaser:
       'Step into the shoes of IPL franchise owners. Manage your ₹100 Cr purse, outsmart rival bidders in live paddle wars, and build the ultimate dream XI!',
     description:
