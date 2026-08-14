@@ -102,7 +102,7 @@ export default function HeroSection({ onNavigate }) {
           <ul className="hero__meta">
             <li><MetaItem value={FEST.date} label="DATE" /></li>
             <li><MetaItem value={FEST.venue} label="VENUE" /></li>
-            <li>Teams of up to <b>4</b></li>
+            <li><b>Four Events</b></li>
           </ul>
 
         </div>

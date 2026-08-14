@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { CLUB } from '../config.js';
+import TechnocratsLogo from './TechnocratsLogo.jsx';
 
 function useReveal(ref) {
   useEffect(() => {
@@ -56,14 +57,15 @@ export default function AboutSection() {
 
           {/* Right column: plaque */}
           <aside className="plaque rev" ref={rightRef}>
-            <div className="plaque__logo">ADD CLUB<br />LOGO HERE</div>
+            <div className="plaque__logo" title="Technocrats Logo">
+              <TechnocratsLogo size={76} />
+            </div>
             <h3 className="plaque__name">Technocrats</h3>
             <p className="plaque__role">IT Department Student Club</p>
             <ul className="plaque__list">
               <li><span>Department</span><b>Information Technology</b></li>
               <li><span>Occasion</span><b>Onam 2026</b></li>
               <li><span>Open to</span><b>2nd &amp; 3rd year</b></li>
-              <li><span>Team size</span><b>Up to 4</b></li>
               <li><span>Events</span><b>Four</b></li>
             </ul>
           </aside>

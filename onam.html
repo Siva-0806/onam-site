@@ -464,16 +464,26 @@ h1, h2, h3, h4 {
 }
 .plaque__logo {
   width: 92px; height: 92px;
-  border: 1px dashed rgba(42, 20, 64, .35);
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 22px;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .1em;
-  text-align: center;
-  color: var(--on-cream-soft);
-  padding: 8px;
+  border-radius: 12px;
+  background: radial-gradient(circle at 35% 35%, #2c1248 0%, #140722 100%);
+  border: 1px solid rgba(232, 180, 79, 0.45);
+  box-shadow: 0 6px 20px rgba(22, 8, 38, 0.22), inset 0 1px 1px rgba(232, 180, 79, 0.35);
+  padding: 6px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.plaque__logo:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(232, 180, 79, 0.85);
+  box-shadow: 0 10px 24px rgba(22, 8, 38, 0.3), 0 0 16px rgba(232, 180, 79, 0.25);
+}
+.plaque__logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 .plaque__name { font-size: 30px; }
 .plaque__role {
@@ -677,15 +687,98 @@ h1, h2, h3, h4 {
 
 .foot {
   border-top: 1px solid rgba(232, 180, 79, .16);
-  padding-block: 42px 54px;
+  padding-block: 46px 56px;
   font-size: 14px;
 }
 .foot__in {
   display: flex;
   flex-wrap: wrap;
-  gap: 26px;
+  gap: 36px 48px;
   justify-content: space-between;
   align-items: flex-start;
+}
+.foot__brand-col {
+  max-width: 320px;
+}
+.foot__dept {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  color: rgba(248, 240, 223, .65);
+  margin-top: 6px;
+}
+.foot__sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: var(--gold);
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+.foot__contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+.foot__heading {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin: 0 0 2px;
+}
+.foot__coords-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px 24px;
+}
+.foot__coord {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.foot__coord-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-ink);
+  letter-spacing: .04em;
+}
+.foot__coord-phone {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: rgba(248, 240, 223, .65);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.foot__coord-phone b {
+  color: var(--gold);
+  font-weight: 500;
+}
+.foot__coord-phone:hover {
+  color: #fff;
+}
+.foot__coord-phone:hover b {
+  color: #fff;
+  text-decoration: underline;
+}
+.foot__mail-row {
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: rgba(248, 240, 223, .7);
+}
+.foot__mail-link {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.foot__mail-link:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 .foot__note {
   font-family: var(--mono);
@@ -1061,17 +1154,64 @@ h1, h2, h3, h4 {
         </div>
 
         <aside class="plaque rev">
-          <!-- ==== CLUB LOGO ====
-               Replace the dashed box below with:
-               <img class="plaque__logo" src="assets/logo/technocrats.png" alt="Technocrats logo"> -->
-          <div class="plaque__logo">ADD CLUB<br>LOGO HERE</div>
+          <div class="plaque__logo" title="Technocrats Logo">
+            <svg width="76" height="76" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Technocrats IT Department Logo">
+              <defs>
+                <radialGradient id="techBgHtml" cx="50%" cy="40%" r="60%">
+                  <stop offset="0%" stop-color="#2D114D"/>
+                  <stop offset="60%" stop-color="#170828"/>
+                  <stop offset="100%" stop-color="#0B0214"/>
+                </radialGradient>
+                <linearGradient id="techGoldHtml" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFF3B0"/>
+                  <stop offset="35%" stop-color="#E8B44F"/>
+                  <stop offset="70%" stop-color="#C68A1B"/>
+                  <stop offset="100%" stop-color="#8C580B"/>
+                </linearGradient>
+                <filter id="goldGlowHtml" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="1.2" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+              <polygon points="50,4 88,18 96,56 78,90 50,98 22,90 4,56 12,18" fill="url(#techBgHtml)" stroke="url(#techGoldHtml)" stroke-width="1.8"/>
+              <polygon points="50,9 83,21 90,55 74,85 50,93 26,85 10,55 17,21" fill="none" stroke="rgba(232, 180, 79, 0.3)" stroke-width="0.8" stroke-dasharray="4 2.5"/>
+              <g stroke="url(#techGoldHtml)" stroke-width="1" stroke-linecap="round" opacity="0.85">
+                <line x1="3" y1="36" x2="10" y2="36"/>
+                <line x1="2" y1="46" x2="9" y2="46"/>
+                <line x1="3" y1="56" x2="10" y2="56"/>
+                <line x1="97" y1="36" x2="90" y2="36"/>
+                <line x1="98" y1="46" x2="91" y2="46"/>
+                <line x1="97" y1="56" x2="90" y2="56"/>
+              </g>
+              <g stroke="url(#techGoldHtml)" stroke-width="1" fill="none" opacity="0.8">
+                <path d="M 22 28 L 32 28 L 38 34"/>
+                <circle cx="22" cy="28" r="1.5" fill="#FFF3B0"/>
+                <path d="M 78 28 L 68 28 L 62 34"/>
+                <circle cx="78" cy="28" r="1.5" fill="#FFF3B0"/>
+                <path d="M 30 76 L 40 76 L 46 70"/>
+                <circle cx="30" cy="76" r="1.5" fill="#FFF3B0"/>
+                <path d="M 70 76 L 60 76 L 54 70"/>
+                <circle cx="70" cy="76" r="1.5" fill="#FFF3B0"/>
+                <path d="M 50 81 L 50 88" stroke-dasharray="1.5 1.5"/>
+              </g>
+              <g filter="url(#goldGlowHtml)">
+                <polygon points="24,30 76,30 72,40 58,40 58,42 42,42 42,40 28,40" fill="url(#techGoldHtml)"/>
+                <polygon points="44,40 56,40 54,72 50,77 46,72" fill="url(#techGoldHtml)"/>
+                <polygon points="50,33 54,37 50,41 46,37" fill="#170828" stroke="url(#techGoldHtml)" stroke-width="0.8"/>
+                <circle cx="50" cy="37" r="1.2" fill="#00E5FF"/>
+              </g>
+              <circle cx="50" cy="77" r="1.8" fill="#00E5FF" stroke="url(#techGoldHtml)" stroke-width="0.7"/>
+              <circle cx="28" cy="35" r="1.2" fill="#FFF3B0"/>
+              <circle cx="72" cy="35" r="1.2" fill="#FFF3B0"/>
+              <text x="50" y="88" text-anchor="middle" fill="url(#techGoldHtml)" font-size="5.2" font-family="'JetBrains Mono', monospace" font-weight="bold" letter-spacing="1.8">IT DEPT</text>
+            </svg>
+          </div>
           <h3 class="plaque__name">Technocrats</h3>
           <p class="plaque__role">IT Department Student Club</p>
           <ul class="plaque__list">
             <li><span>Department</span><b>Information Technology</b></li>
             <li><span>Occasion</span><b>Onam 2026</b></li>
             <li><span>Open to</span><b>2nd &amp; 3rd year</b></li>
-            <li><span>Team size</span><b>Up to 4</b></li>
             <li><span>Events</span><b>Four</b></li>
           </ul>
         </aside>
@@ -1252,12 +1392,18 @@ const FORM_LINKS = {
    rather than inventing information.
    ------------------------------------------------------------------------- */
 const FEST = {
-  date:  null,   // e.g. "Saturday, 12 September 2026"
-  venue: null,   // e.g. "IT Block, Seminar Hall"
-  contactName:  null,   // e.g. "Student coordinator name"
-  contactPhone: null,   // e.g. "+91 XXXXX XXXXX"
-  contactEmail: null,   // e.g. "technocrats@yourcollege.edu"
-  instagram:    null    // e.g. "https://instagram.com/..."
+  date: "August 22",
+  venue: "IT Department",
+  contactName: "SIVAPIRIYAN",
+  contactPhone: "9345814759",
+  contactEmail: "sivapiriyansakthi@gmail.com",
+  coordinators: [
+    { name: "SIVAPIRIYAN", phone: "9345814759" },
+    { name: "RITHIKA SRI", phone: "99422 44472" },
+    { name: "MADHU CHANDHANA", phone: "93426 04040" },
+    { name: "GAUTHAMAN", phone: "63832 37563" }
+  ],
+  instagram: null
 };
 
 
@@ -1272,7 +1418,7 @@ const CLUB = {
   name: "Technocrats",
   role: "IT Department Student Club",
   intro: [
-    "[ADD OFFICIAL CLUB INTRODUCTION HERE] Technocrats is a student-driven initiative of the Information Technology department, built around technology, innovation, creativity, collaboration and student development.",
+    "Technocrats is a student-driven initiative of the Information Technology department, built around technology, innovation, creativity, collaboration and student development.",
     "TECHAVAM 2026 is our department-level Onam celebration — a day where students take on technology-driven, creative and culturally inspired challenges together."
   ]
 };
@@ -1284,7 +1430,7 @@ const CLUB = {
 const SCHEDULE = [
   { label: "Slot 1", time: "8:45 – 10:45 AM",  events: "HackKerala (Onam Hackathon) · Digital Pookolam",  kind: "slot"  },
   { label: "Break",  time: "10:45 – 11:15 AM", events: "Refreshments & Special Surprise Package Performance 🎭✨", kind: "break" },
-  { label: "Slot 2", time: "11:30 AM – 1:30 PM", events: "WebCraft AI (90-Min Blitz) · CricBid (IPL Mega Auction)", kind: "slot" }
+  { label: "Slot 2", time: "8:30 AM – 10:30 AM", events: "WebCraft AI (90-Min Blitz)", kind: "slot" }
 ];
 
 
@@ -1351,14 +1497,14 @@ const EVENTS = [
     name: "WebCraft AI: 90-Min Blitz",
     tagline: "Prompt to Production · Build & Deploy in 90 Minutes",
     slot: "Slot 2",
-    time: "11:30 AM – 1:30 PM",
+    time: "8:30 – 10:30 AM",
     teaser: "From prompt to production in 90 minutes. Harness AI tools, modern stacks, and rapid design to build and deploy a stunning, functional website.",
     description:
-      "A high-speed AI web development sprint! Participants receive a live project brief at 11:30 AM and get exactly 90 minutes of intensive build time to generate, refine, style, and deploy a fully functional, responsive website. Leverage modern LLMs, generative UI tools, prompt engineering, and web frameworks to create an extraordinary digital experience against the clock.",
+      "A high-speed AI web development sprint! Participants receive a live project brief at 8:30 AM and get exactly 90 minutes of intensive build time to generate, refine, style, and deploy a fully functional, responsive website. Leverage modern LLMs, generative UI tools, prompt engineering, and web frameworks to create an extraordinary digital experience against the clock.",
     sprintTimeline: [
-      { n: "01", label: "Briefing", text: "11:30 – 11:40 AM: Theme reveal & technical guidelines." },
-      { n: "02", label: "AI Build Sprint", text: "11:40 AM – 1:10 PM: 90-minute live coding & prompt engineering window." },
-      { n: "03", label: "Deploy & Pitch", text: "1:10 – 1:30 PM: Live URL deployment checks & jury walkthroughs." }
+      { n: "01", label: "Briefing", text: "8:30 – 8:40 AM: Theme reveal & technical guidelines." },
+      { n: "02", label: "AI Build Sprint", text: "8:40 – 10:10 AM: 90-minute live coding & prompt engineering window." },
+      { n: "03", label: "Deploy & Pitch", text: "10:10 – 10:30 AM: Live URL deployment checks & jury walkthroughs." }
     ],
     deliverables: [
       "Live deployed URL or running local application",
@@ -1369,11 +1515,11 @@ const EVENTS = [
     rules: [
       "Open exclusively to 2nd & 3rd Year IT students.",
       "Teams of 1 to 4 members.",
-      "Strict 90-minute build timer from 11:40 AM to 1:10 PM.",
+      "Strict 90-minute build timer from 8:40 AM to 10:10 AM.",
       "Generative AI tools (v0, Bolt, Cursor, ChatGPT, Claude, Gemini, Copilot) are encouraged.",
       "Websites must be responsive across desktop and mobile screens.",
       "Evaluation is based on UI polish, responsiveness, feature completeness, and prompt ingenuity.",
-      "Final live demonstration begins at 1:10 PM."
+      "Final live demonstration begins at 10:10 AM."
     ],
     tags: ["AI & Web", "Speed Build", "Prompt Engineering", "UI/UX", "Frontend"],
     seal: { rings: [4, 16, 24], hue: "violet" }
@@ -1643,7 +1789,7 @@ function isFormLinkReady(url) {
       "<li><b>" + orTodo(FEST.date, "DATE") + "</b></li>",
       "<li><b>" + orTodo(FEST.venue, "VENUE") + "</b></li>",
       "<li>2nd &amp; 3rd year IT only</li>",
-      "<li>Teams of up to <b>4</b></li>"
+      "<li><b>Four Events</b></li>"
     ].join("");
 
     /* marquee — what the day is made of, doubled so the loop is seamless */
@@ -1687,11 +1833,30 @@ function isFormLinkReady(url) {
     }).join("");
 
     /* footer contact */
-    $("#footContact").innerHTML = [
-      "Coordinator: <b>" + orTodo(FEST.contactName, "NAME") + "</b>",
-      "Phone: <b>" + orTodo(FEST.contactPhone, "PHONE") + "</b>",
-      "Mail: <b>" + orTodo(FEST.contactEmail, "EMAIL") + "</b>"
-    ].join("<br>");
+    var coords = FEST.coordinators || [
+      { name: "SIVAPIRIYAN", phone: "9345814759" },
+      { name: "RITHIKA SRI", phone: "99422 44472" },
+      { name: "MADHU CHANDHANA", phone: "93426 04040" },
+      { name: "GAUTHAMAN", phone: "63832 37563" }
+    ];
+    var footContactEl = $("#footContact");
+    if (footContactEl) {
+      footContactEl.innerHTML = '<div class="foot__contact-col">' +
+        '<p class="foot__heading">Event Coordinators</p>' +
+        '<div class="foot__coords-grid">' +
+          coords.map(function (c) {
+            var cleanPhone = c.phone.replace(/\s+/g, '');
+            return '<div class="foot__coord">' +
+              '<span class="foot__coord-name">' + esc(c.name) + '</span>' +
+              '<a class="foot__coord-phone" href="tel:' + cleanPhone + '">PH NO: <b>' + esc(c.phone) + '</b></a>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+        '<div class="foot__mail-row">' +
+          '<span>Mail:</span> <a class="foot__mail-link" href="mailto:' + esc(FEST.contactEmail) + '"><b>' + esc(FEST.contactEmail) + '</b></a>' +
+        '</div>' +
+      '</div>';
+    }
   }
 
   /* expose helpers for the registration page */

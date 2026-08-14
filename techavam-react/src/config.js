@@ -20,11 +20,17 @@ export const FORM_LINKS = {
 };
 
 export const FEST = {
-  date: 'September 2026',
-  venue: 'IT Department Block',
-  contactName: 'Technocrats Coordinator',
-  contactPhone: null,
-  contactEmail: null,
+  date: 'August 22',
+  venue: 'IT Department',
+  contactName: 'SIVAPIRIYAN',
+  contactPhone: '9345814759',
+  contactEmail: 'sivapiriyansakthi@gmail.com',
+  coordinators: [
+    { name: 'SIVAPIRIYAN', phone: '9345814759' },
+    { name: 'RITHIKA SRI', phone: '99422 44472' },
+    { name: 'MADHU CHANDHANA', phone: '93426 04040' },
+    { name: 'GAUTHAMAN', phone: '63832 37563' },
+  ],
   instagram: null,
 };
 
@@ -52,8 +58,8 @@ export const SCHEDULE = [
   },
   {
     label: 'Slot 2',
-    time: '11:30 AM – 1:30 PM',
-    events: 'WebCraft AI (90-Min Blitz) · CricBid (IPL Mega Auction)',
+    time: '8:30 AM – 10:30 AM',
+    events: 'WebCraft AI (90-Min Blitz)',
     kind: 'slot',
   },
 ];
@@ -120,15 +126,15 @@ export const EVENTS = [
     name: 'WebCraft AI: 90-Min Blitz',
     tagline: 'Prompt to Production · Build & Deploy in 90 Minutes',
     slot: 'Slot 2',
-    time: '11:30 AM – 1:30 PM',
+    time: '8:30 – 10:30 AM',
     teaser:
       'From prompt to production in 90 minutes. Harness AI tools, modern stacks, and rapid design to build and deploy a stunning, functional website.',
     description:
-      'A high-speed AI web development sprint! Participants receive a live project brief at 11:30 AM and get exactly 90 minutes of intensive build time to generate, refine, style, and deploy a fully functional, responsive website. Leverage modern LLMs, generative UI tools, prompt engineering, and web frameworks to create an extraordinary digital experience against the clock.',
+      'A high-speed AI web development sprint! Participants receive a live project brief at 8:30 AM and get exactly 90 minutes of intensive build time to generate, refine, style, and deploy a fully functional, responsive website. Leverage modern LLMs, generative UI tools, prompt engineering, and web frameworks to create an extraordinary digital experience against the clock.',
     sprintTimeline: [
-      { n: '01', label: 'Briefing', text: '11:30 – 11:40 AM: Theme reveal & technical guidelines.' },
-      { n: '02', label: 'AI Build Sprint', text: '11:40 AM – 1:10 PM: 90-minute live coding & prompt engineering window.' },
-      { n: '03', label: 'Deploy & Pitch', text: '1:10 – 1:30 PM: Live URL deployment checks & jury walkthroughs.' },
+      { n: '01', label: 'Briefing', text: '8:30 – 8:40 AM: Theme reveal & technical guidelines.' },
+      { n: '02', label: 'AI Build Sprint', text: '8:40 – 10:10 AM: 90-minute live coding & prompt engineering window.' },
+      { n: '03', label: 'Deploy & Pitch', text: '10:10 – 10:30 AM: Live URL deployment checks & jury walkthroughs.' },
     ],
     deliverables: [
       'Live deployed URL or running local application',
@@ -139,11 +145,11 @@ export const EVENTS = [
     rules: [
       'Open exclusively to 2nd & 3rd Year IT students.',
       'Individual or team entry (up to 4 members).',
-      'Strict 90-minute build timer from 11:40 AM to 1:10 PM.',
+      'Strict 90-minute build timer from 8:40 AM to 10:10 AM.',
       'Generative AI tools (v0, Bolt, Cursor, ChatGPT, Claude, Gemini, Copilot) are encouraged.',
       'Websites must be responsive across desktop and mobile screens.',
       'Evaluation is based on UI polish, responsiveness, feature completeness, and prompt ingenuity.',
-      'Final live demonstration begins at 1:10 PM.',
+      'Final live demonstration begins at 10:10 AM.',
     ],
     tags: ['AI & Web', 'Speed Build', 'Prompt Engineering', 'UI/UX', 'Frontend'],
     seal: { rings: [4, 16, 24], hue: 'violet' },
