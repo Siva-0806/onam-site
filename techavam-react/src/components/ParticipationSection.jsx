@@ -44,7 +44,7 @@ const RULES = [
   {
     n: 'Event Spirit',
     title: 'One morning, four challenges',
-    desc: 'TECHAVAM packs startups, digital art, a physical treasure hunt, and a progressive coding quest all into one celebration morning. Pick your challenge, build your team.',
+    desc: 'TECHAVAM packs an Onam hackathon, digital pookkalam design, a 90-minute AI website blitz, and an IPL mega player auction all into one celebration morning. Pick your challenge, build your team.',
   },
   {
     n: 'Teams',

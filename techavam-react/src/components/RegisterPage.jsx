@@ -24,7 +24,7 @@ function Sequence({ items, title }) {
   if (!items || items.length === 0) return null;
   return (
     <div className="block">
-      <p className="block__h">{title} · cleared in order</p>
+      <p className="block__h">{title}</p>
       <ul className="steps">
         {items.map((s) => (
           <li key={s.n}>
@@ -39,8 +39,18 @@ function Sequence({ items, title }) {
 }
 
 function EventPanel({ event }) {
-  const sequence = event.checkpoints || event.levels;
-  const seqTitle = event.checkpoints ? 'Checkpoints' : 'Levels';
+  const sequence =
+    event.sprintTimeline ||
+    event.auctionRounds ||
+    event.checkpoints ||
+    event.levels;
+  const seqTitle = event.sprintTimeline
+    ? 'Sprint Timeline'
+    : event.auctionRounds
+    ? 'Auction Rounds'
+    : event.checkpoints
+    ? 'Checkpoints · Cleared in order'
+    : 'Levels · Cleared in order';
 
   return (
     <>

@@ -184,10 +184,13 @@ export const ApiService = {
           total: 0,
           duplicates: 0,
           eventCounts: {
+            'HackKerala: The Onam Hackathon': 0,
+            'Digital Pookolam': 0,
+            'WebCraft AI: 90-Min Blitz': 0,
+            'CricBid: The IPL Mega Auction': 0,
             'Startup Maveli': 0,
             'Code Questers': 0,
             'Tech + Kerala Amazing Race': 0,
-            'Digital Pookolam': 0,
           },
           yearCounts: { '2ND': 0, '3RD': 0 },
           sectionCounts: {

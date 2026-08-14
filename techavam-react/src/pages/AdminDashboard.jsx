@@ -7,10 +7,13 @@ export default function AdminDashboard({ onLogout, onBackHome }) {
       total: 0,
       duplicates: 0,
       eventCounts: {
+        'HackKerala: The Onam Hackathon': 0,
+        'Digital Pookolam': 0,
+        'WebCraft AI: 90-Min Blitz': 0,
+        'CricBid: The IPL Mega Auction': 0,
         'Startup Maveli': 0,
         'Code Questers': 0,
         'Tech + Kerala Amazing Race': 0,
-        'Digital Pookolam': 0,
       },
       yearCounts: { '2ND': 0, '3RD': 0 },
       sectionCounts: {
@@ -362,20 +365,20 @@ export default function AdminDashboard({ onLogout, onBackHome }) {
 
             {/* 4 Event Cards */}
             <div
-              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'Startup Maveli' ? 'is-active' : ''}`}
-              onClick={() => setSelectedEvent(selectedEvent === 'Startup Maveli' ? 'ALL' : 'Startup Maveli')}
+              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'HackKerala: The Onam Hackathon' ? 'is-active' : ''}`}
+              onClick={() => setSelectedEvent(selectedEvent === 'HackKerala: The Onam Hackathon' ? 'ALL' : 'HackKerala: The Onam Hackathon')}
               role="button"
               tabIndex={0}
             >
               <div className="admin-stat-card__top">
-                <span className="admin-stat-card__label">STARTUP MAVELI</span>
-                <span className="admin-stat-card__slot">Slot 1</span>
+                <span className="admin-stat-card__label">HACKKERALA</span>
+                <span className="admin-stat-card__slot">Slot 1 · Tech</span>
               </div>
               <div className="admin-stat-card__num">
-                {data.stats.eventCounts['Startup Maveli'] || 0}
+                {data.stats.eventCounts['HackKerala: The Onam Hackathon'] || data.stats.eventCounts['Startup Maveli'] || 0}
               </div>
               <div className="admin-stat-card__footer">
-                <span>Innovation &amp; AI Pitch</span>
+                <span>Onam &amp; Kerala Hackathon</span>
                 <span className="admin-stat-card__hint">Click to filter</span>
               </div>
             </div>
@@ -388,7 +391,7 @@ export default function AdminDashboard({ onLogout, onBackHome }) {
             >
               <div className="admin-stat-card__top">
                 <span className="admin-stat-card__label">DIGITAL POOKOLAM</span>
-                <span className="admin-stat-card__slot">Slot 2</span>
+                <span className="admin-stat-card__slot">Slot 1 · Non-Tech</span>
               </div>
               <div className="admin-stat-card__num">
                 {data.stats.eventCounts['Digital Pookolam'] || 0}
@@ -400,39 +403,39 @@ export default function AdminDashboard({ onLogout, onBackHome }) {
             </div>
 
             <div
-              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'Tech + Kerala Amazing Race' ? 'is-active' : ''}`}
-              onClick={() => setSelectedEvent(selectedEvent === 'Tech + Kerala Amazing Race' ? 'ALL' : 'Tech + Kerala Amazing Race')}
+              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'WebCraft AI: 90-Min Blitz' ? 'is-active' : ''}`}
+              onClick={() => setSelectedEvent(selectedEvent === 'WebCraft AI: 90-Min Blitz' ? 'ALL' : 'WebCraft AI: 90-Min Blitz')}
               role="button"
               tabIndex={0}
             >
               <div className="admin-stat-card__top">
-                <span className="admin-stat-card__label">AMAZING RACE</span>
-                <span className="admin-stat-card__slot">Slot 1</span>
+                <span className="admin-stat-card__label">WEBCRAFT AI</span>
+                <span className="admin-stat-card__slot">Slot 2 · Tech</span>
               </div>
               <div className="admin-stat-card__num">
-                {data.stats.eventCounts['Tech + Kerala Amazing Race'] || 0}
+                {data.stats.eventCounts['WebCraft AI: 90-Min Blitz'] || data.stats.eventCounts['Code Questers'] || 0}
               </div>
               <div className="admin-stat-card__footer">
-                <span>Tech &amp; Kerala Hunt</span>
+                <span>90-Min AI Website Blitz</span>
                 <span className="admin-stat-card__hint">Click to filter</span>
               </div>
             </div>
 
             <div
-              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'Code Questers' ? 'is-active' : ''}`}
-              onClick={() => setSelectedEvent(selectedEvent === 'Code Questers' ? 'ALL' : 'Code Questers')}
+              className={`admin-stat-card admin-stat-card--event ${selectedEvent === 'CricBid: The IPL Mega Auction' ? 'is-active' : ''}`}
+              onClick={() => setSelectedEvent(selectedEvent === 'CricBid: The IPL Mega Auction' ? 'ALL' : 'CricBid: The IPL Mega Auction')}
               role="button"
               tabIndex={0}
             >
               <div className="admin-stat-card__top">
-                <span className="admin-stat-card__label">CODE QUESTERS</span>
-                <span className="admin-stat-card__slot">Slot 2</span>
+                <span className="admin-stat-card__label">CRICBID IPL</span>
+                <span className="admin-stat-card__slot">Slot 2 · Non-Tech</span>
               </div>
               <div className="admin-stat-card__num">
-                {data.stats.eventCounts['Code Questers'] || 0}
+                {data.stats.eventCounts['CricBid: The IPL Mega Auction'] || data.stats.eventCounts['Tech + Kerala Amazing Race'] || 0}
               </div>
               <div className="admin-stat-card__footer">
-                <span>Progressive Coding Quest</span>
+                <span>IPL Player Mega Auction</span>
                 <span className="admin-stat-card__hint">Click to filter</span>
               </div>
             </div>
@@ -478,10 +481,10 @@ export default function AdminDashboard({ onLogout, onBackHome }) {
                   onChange={(e) => setSelectedEvent(e.target.value)}
                 >
                   <option value="ALL">All Events (4)</option>
-                  <option value="Startup Maveli">Startup Maveli</option>
+                  <option value="HackKerala: The Onam Hackathon">HackKerala: The Onam Hackathon</option>
                   <option value="Digital Pookolam">Digital Pookolam</option>
-                  <option value="Tech + Kerala Amazing Race">Tech + Kerala Amazing Race</option>
-                  <option value="Code Questers">Code Questers</option>
+                  <option value="WebCraft AI: 90-Min Blitz">WebCraft AI: 90-Min Blitz</option>
+                  <option value="CricBid: The IPL Mega Auction">CricBid: The IPL Mega Auction</option>
                 </select>
               </div>
 

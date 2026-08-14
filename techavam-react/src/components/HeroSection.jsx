@@ -71,10 +71,9 @@ export default function HeroSection({ onNavigate }) {
           </p>
 
           <p className="hero__sub">
-            The IT Department's Onam celebration. One morning, four events, and Kerala's
-            oldest festival run the way this department does things — startups, digital
-            art, a treasure hunt across the block, and a coding quest that unlocks level
-            by level.
+            The IT Department's Onam celebration. One morning, four arenas, and Kerala's
+            oldest festival run the way this department does things — an Onam hackathon,
+            digital pookkalam design, a 90-minute AI website blitz, and a high-stakes IPL mega auction.
           </p>
 
           <div className="hero__cta">

@@ -2,14 +2,21 @@
 // Event Google Form Responder URLs (Public)
 
 export const FORM_LINKS = {
-  startup:
+  hackathon:
     'https://docs.google.com/forms/d/e/1FAIpQLSeUfZU6-znHvfK6MuZMve3jfsEjebHqxxqg41jzUXKTxaTc0g/viewform?usp=sharing&ouid=101931112181900490676',
   pookolam:
     'https://docs.google.com/forms/d/e/1FAIpQLSc3KCHkyLhfGrIsoehLBKVtHjPEL2MseuGtxqX_TDVXifI0dg/viewform?usp=sharing&ouid=101931112181900490676',
-  race:
+  webcraft:
+    'https://docs.google.com/forms/d/e/1FAIpQLSdLj_X9WyI0KnGNioEBnaScsQJf_jr3_2QWe5kmDbhRgjIfvg/viewform?usp=sharing&ouid=101931112181900490676',
+  cricbid:
     'https://docs.google.com/forms/d/e/1FAIpQLSfQcdfkQIe1yu0pm_mKE85KImLpx_lsBD1uk0RoEaKNHWtJlw/viewform?usp=sharing&ouid=101931112181900490676',
+  // Backward compatibility keys
+  startup:
+    'https://docs.google.com/forms/d/e/1FAIpQLSeUfZU6-znHvfK6MuZMve3jfsEjebHqxxqg41jzUXKTxaTc0g/viewform?usp=sharing&ouid=101931112181900490676',
   code:
     'https://docs.google.com/forms/d/e/1FAIpQLSdLj_X9WyI0KnGNioEBnaScsQJf_jr3_2QWe5kmDbhRgjIfvg/viewform?usp=sharing&ouid=101931112181900490676',
+  race:
+    'https://docs.google.com/forms/d/e/1FAIpQLSfQcdfkQIe1yu0pm_mKE85KImLpx_lsBD1uk0RoEaKNHWtJlw/viewform?usp=sharing&ouid=101931112181900490676',
 };
 
 export const FEST = {
@@ -34,150 +41,147 @@ export const SCHEDULE = [
   {
     label: 'Slot 1',
     time: '8:45 – 10:45 AM',
-    events: 'Startup Maveli · Amazing Race',
+    events: 'HackKerala (Onam Hackathon) · Digital Pookolam',
     kind: 'slot',
   },
   {
     label: 'Break',
     time: '10:45 – 11:15 AM',
-    events: 'Refreshments & Cultural Gather',
+    events: 'Refreshments & Special Surprise Package Performance 🎭✨',
     kind: 'break',
   },
   {
     label: 'Slot 2',
     time: '11:30 AM – 1:30 PM',
-    events: 'Digital Pookolam · Code Questers',
+    events: 'WebCraft AI (90-Min Blitz) · CricBid (IPL Mega Auction)',
     kind: 'slot',
   },
 ];
 
 export const EVENTS = [
   {
-    id: 'startup',
-    name: 'Startup Maveli',
-    tagline: 'Modernising Onam through innovation',
+    id: 'hackathon',
+    name: 'HackKerala: The Onam Hackathon',
+    tagline: "Code for God's Own Country · Problem Statements Dropping Live",
     slot: 'Slot 1',
     time: '8:45 – 10:45 AM',
     teaser:
-      'Mahabali is back in 2026 and he wants Onam upgraded. Build the startup prototype that does it.',
+      'A high-intensity 2-hour technical hackathon tackling real Kerala & Onam challenges. Problem statements revealed live at 8:45 AM!',
     description:
-      'Mahabali has returned in 2026 and wants to modernise Onam. Build a technology startup idea that solves a real Onam or Kerala problem — then pitch it like a founder. MaveliGPT, SadhyaAI, Pookalam-as-a-Service, Smart Vadamvali, or an AI Onam assistant: the idea is yours, the ambition is the point.',
+      'An adrenaline-pumping 2-hour technical hackathon celebrating innovation in the spirit of Onam. Participants will engineer solutions for real-world challenges inspired by Kerala culture, smart tourism, sustainable festivities, local commerce, and Malayalam digital tools. Secret problem statements will be officially delivered live at the 8:45 AM kickoff. Assemble your team, code your prototype, and pitch before the timer strikes!',
     deliverables: [
-      'Startup name and concept',
-      'Problem statement and technology solution',
-      'A website, app, or UI prototype',
-      'Business model & value proposition',
-      'A short pitch presentation to the panel',
+      'Working code prototype / demo application',
+      'Problem statement selection & approach architecture',
+      'Live technical demonstration to the jury',
+      '2-minute lightning pitch & Q&A session',
     ],
     rules: [
       'Open exclusively to 2nd & 3rd Year IT students.',
-      'Individual registration per participant.',
-      'Bring your own laptop; power and Wi-Fi are provided.',
-      'The idea must connect to Onam, Kerala, or culture & technology.',
-      'AI tools and frameworks are allowed — cite them in your pitch.',
-      'Pitch presentation time is strictly capped.',
+      'Individual or team entry (up to 4 members).',
+      'Secret problem statements will be announced live at 8:45 AM sharp.',
+      'All prototypes and code must be developed live during the 2-hour window.',
+      'Any tech stack, framework, or programming language is permitted.',
+      'AI coding tools and frameworks are allowed with disclosure in the pitch.',
+      'Final prototype submission and code freeze at 10:45 AM.',
     ],
-    tags: ['Innovation', 'Entrepreneurship', 'AI', 'Prototype'],
+    tags: ['Hackathon', 'Kerala Tech', 'Coding', 'Innovation', 'Prototype'],
     seal: { rings: [8, 12, 16], hue: 'gold' },
-    formUrl: FORM_LINKS.startup,
+    formUrl: FORM_LINKS.hackathon,
   },
   {
     id: 'pookolam',
     name: 'Digital Pookolam',
     tagline: 'Where tradition meets digital creativity',
-    slot: 'Slot 2',
-    time: '11:30 AM – 1:30 PM',
+    slot: 'Slot 1',
+    time: '8:45 – 10:45 AM',
     teaser:
-      'The same floral rings, none of the physical petals. Design the festive pookalam on a digital canvas.',
+      'The same floral rings, none of the physical petals. Design breathtaking festive pookkalams on a digital canvas.',
     description:
-      'A theme-based digital art competition built on the traditional Kerala pookalam. The theme is announced at the start of the slot — Technology Meets Tradition, Kerala 2050, Digital Mahabali, Green Onam, or AI Meets Culture are the kind of prompts to expect.',
+      'A theme-based digital art competition celebrating the traditional Kerala floral carpet. The official theme and secret design twists are announced at the 8:45 AM kickoff — Technology Meets Tradition, Kerala 2050, Digital Mahabali, Green Onam, or AI Meets Culture are the kind of prompts to expect. Craft your masterpiece with symmetry, vibrant colors, and digital flair!',
     deliverables: [
-      'One high-resolution digital pookalam on the announced theme',
+      'One high-resolution digital pookkalam artwork on the announced theme',
       'Any hidden design elements specified at the slot kickoff',
       'A concise one-line description of your creative concept',
     ],
     rules: [
       'Open exclusively to 2nd & 3rd Year IT students.',
-      'Individual registration per participant.',
-      'Any digital tool allowed — Figma, Illustrator, Photoshop, Procreate, Blender, or code/SVG/Canvas.',
-      'The specific prompt is revealed when the slot begins.',
+      'Individual or team entry (up to 4 members).',
+      'Any digital tool allowed — Figma, Illustrator, Photoshop, Procreate, Blender, Canva, or code/SVG/Canvas.',
+      'The specific theme and design twist is revealed when the slot begins at 8:45 AM.',
       'All artwork must be created live during the slot. Pre-made templates are disqualified.',
-      'Submit as PNG, JPG, or SVG at the specified resolution.',
+      'Submit as PNG, JPG, or SVG at the specified resolution before 10:45 AM.',
     ],
-    tags: ['Digital Art', 'Design', 'Creativity', 'Onam'],
+    tags: ['Digital Art', 'Design', 'Creativity', 'Onam', 'Visual'],
     seal: { rings: [6, 12, 18], hue: 'marigold' },
     formUrl: FORM_LINKS.pookolam,
   },
   {
-    id: 'race',
-    name: 'Tech + Kerala Amazing Race',
-    tagline: 'Solve · Scan · Run · Discover',
-    slot: 'Slot 1',
-    time: '8:45 – 10:45 AM',
-    teaser:
-      'Seven checkpoints across the department block. Code, culture, QR codes, and quick thinking.',
-    description:
-      'A hybrid treasure hunt: part debugging, part Kerala cultural trivia, and part physical challenge. Move checkpoint to checkpoint across the department block — each one unlocks only after you solve and clear the previous one.',
-    checkpoints: [
-      { n: '01', label: 'Coding', text: 'Fix a small bug to unlock your next clue.' },
-      { n: '02', label: 'Kerala', text: 'Identify a traditional Kerala item, song, or landmark.' },
-      { n: '03', label: 'QR Clue', text: 'Scan the hidden QR code and solve its riddle.' },
-      { n: '04', label: 'Physical', text: 'A short physical team task. No shortcuts.' },
-      { n: '05', label: 'AI Task', text: 'Prompt and debug an AI puzzle challenge.' },
-      { n: '06', label: 'Logic', text: 'A logic puzzle that tests reasoning over speed.' },
-      { n: '07', label: 'Mahabali', text: 'Find Mahabali, recover the final token, and finish.' },
-    ],
-    deliverables: [
-      'Clear all seven checkpoints in sequential order',
-      'Collect the verification token issued at each checkpoint',
-      'Reach the finish line before the slot closes',
-    ],
-    rules: [
-      'Open exclusively to 2nd & 3rd Year IT students.',
-      'Individual registration per participant.',
-      'Carry one charged smartphone with an active camera/QR scanner.',
-      'Checkpoints must be cleared in order — skipping voids the run.',
-      'Wear comfortable attire for movement.',
-      'Volunteer and checkpoint judge decisions are final.',
-    ],
-    tags: ['Treasure Hunt', 'QR', 'Technology', 'Kerala', 'Logic'],
-    seal: { rings: [10, 10, 20], hue: 'lavender' },
-    formUrl: FORM_LINKS.race,
-  },
-  {
-    id: 'code',
-    name: 'Code Questers',
-    tagline: 'Crack the code · Complete the quest',
+    id: 'webcraft',
+    name: 'WebCraft AI: 90-Min Blitz',
+    tagline: 'Prompt to Production · Build & Deploy in 90 Minutes',
     slot: 'Slot 2',
     time: '11:30 AM – 1:30 PM',
     teaser:
-      'Six progressive locked levels. Solving one is the only way to unlock the next.',
+      'From prompt to production in 90 minutes. Harness AI tools, modern stacks, and rapid design to build and deploy a stunning, functional website.',
     description:
-      'Not a conventional coding contest — a progressive quest. Every level tests a distinct facet of problem-solving, algorithmic thinking, and debugging. Level six remains locked until level five falls.',
-    levels: [
-      { n: '01', label: 'Bug Hunt', text: 'Identify and fix logic errors in broken code.' },
-      { n: '02', label: 'Output Prediction', text: 'Analyze tricky snippets and determine exact output.' },
-      { n: '03', label: 'Logic Quest', text: 'Derive algorithmic solutions before coding.' },
-      { n: '04', label: 'Code Breaker', text: 'Decode hidden patterns and ciphers.' },
-      { n: '05', label: 'Speed Coding', text: 'Write optimal, clean solutions against the clock.' },
-      { n: '06', label: 'Final Quest', text: 'The ultimate synthesis challenge.' },
+      'A high-speed AI web development sprint! Participants receive a live project brief at 11:30 AM and get exactly 90 minutes of intensive build time to generate, refine, style, and deploy a fully functional, responsive website. Leverage modern LLMs, generative UI tools, prompt engineering, and web frameworks to create an extraordinary digital experience against the clock.',
+    sprintTimeline: [
+      { n: '01', label: 'Briefing', text: '11:30 – 11:40 AM: Theme reveal & technical guidelines.' },
+      { n: '02', label: 'AI Build Sprint', text: '11:40 AM – 1:10 PM: 90-minute live coding & prompt engineering window.' },
+      { n: '03', label: 'Deploy & Pitch', text: '1:10 – 1:30 PM: Live URL deployment checks & jury walkthroughs.' },
     ],
     deliverables: [
-      'Clear each quest level to unlock subsequent challenges',
-      'Submit working code solutions with correct test cases',
-      'Finish as many levels as possible before the slot timer expires',
+      'Live deployed URL or running local application',
+      'Source code repository with prompt history log',
+      'Responsive UI with functional interactive components',
+      '2-minute live walkthrough showcasing AI agility & design polish',
     ],
     rules: [
       'Open exclusively to 2nd & 3rd Year IT students.',
-      'Individual registration per participant.',
-      'Programming languages: Python, C++, Java, C, or JavaScript.',
-      'Levels unlock strictly in sequence.',
-      'Ranking is evaluated by total levels cleared, then by total completion time.',
-      'External AI coding assistants are prohibited during this contest.',
+      'Individual or team entry (up to 4 members).',
+      'Strict 90-minute build timer from 11:40 AM to 1:10 PM.',
+      'Generative AI tools (v0, Bolt, Cursor, ChatGPT, Claude, Gemini, Copilot) are encouraged.',
+      'Websites must be responsive across desktop and mobile screens.',
+      'Evaluation is based on UI polish, responsiveness, feature completeness, and prompt ingenuity.',
+      'Final live demonstration begins at 1:10 PM.',
     ],
-    tags: ['Coding', 'Debugging', 'Algorithms', 'Logic'],
+    tags: ['AI & Web', 'Speed Build', 'Prompt Engineering', 'UI/UX', 'Frontend'],
     seal: { rings: [4, 16, 24], hue: 'violet' },
-    formUrl: FORM_LINKS.code,
+    formUrl: FORM_LINKS.webcraft,
+  },
+  {
+    id: 'cricbid',
+    name: 'CricBid: The IPL Mega Auction',
+    tagline: 'Strategy · ₹100 Cr Purse · Assemble the Championship XI',
+    slot: 'Slot 2',
+    time: '11:30 AM – 1:30 PM',
+    teaser:
+      'Step into the shoes of IPL franchise owners. Manage your ₹100 Cr purse, outsmart rival bidders in live paddle wars, and build the ultimate dream XI!',
+    description:
+      'Experience the electric atmosphere of the IPL Mega Auction room! Each team represents a franchise armed with a virtual purse of ₹100 Crores. Engage in high-stakes bidding battles across Marquee superstars, Indian powerhouses, overseas legends, and tactical all-rounders. Master purse economics, predict rival bids, and build the most balanced championship squad.',
+    auctionRounds: [
+      { n: '01', label: 'Marquee Set', text: 'Iconic superstars & captaincy contenders.' },
+      { n: '02', label: 'Indian Core', text: 'Explosive batsmen, finishers & wicketkeepers.' },
+      { n: '03', label: 'Bowling Unit', text: 'Lethal pace attack & mystery spinners.' },
+      { n: '04', label: 'Overseas & All-Rounders', text: 'Impact players & dynamic match-winners.' },
+      { n: '05', label: 'Accelerated Round', text: 'Rapid-fire bidding & final squad ratification.' },
+    ],
+    deliverables: [
+      'Official finalized Playing XI & squad sheet',
+      'Purse utilization & financial balance breakdown',
+      'Franchise strategy pitch explaining captaincy and tactical choices',
+    ],
+    rules: [
+      'Open exclusively to 2nd & 3rd Year IT students.',
+      'Teams of up to 4 franchise owners.',
+      'Each franchise starts with an equal ₹100 Crore virtual budget.',
+      'Squad composition rules apply (mandatory bowlers, wicketkeeper, max overseas in XI).',
+      'Paddle raises must be rapid; highest valid bid before the gavel wins the player.',
+      'Auctioneer’s hammer call and squad balance evaluations are final.',
+    ],
+    tags: ['IPL Auction', 'Strategy', 'Bidding', 'Cricket', 'Team Management'],
+    seal: { rings: [10, 10, 20], hue: 'lavender' },
+    formUrl: FORM_LINKS.cricbid,
   },
 ];
 

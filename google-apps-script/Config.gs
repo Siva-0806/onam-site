@@ -9,28 +9,28 @@ var CONFIG = {
   // Event Response Spreadsheets Configuration
   EVENTS: [
     {
-      id: 'startup',
-      name: 'Startup Maveli',
+      id: 'hackathon',
+      name: 'HackKerala: The Onam Hackathon',
       spreadsheetId: '1T8HMBdBBv5ChNm0QDRduKLvKat31aGUZo4Ntz3xHGGE',
       gid: '614455485'
-    },
-    {
-      id: 'code',
-      name: 'Code Questers',
-      spreadsheetId: '1q2RLe4_kcx8Nia_1bW6nmyqSjyvgQCw-Xa1fRrq0YhQ',
-      gid: '912982728'
-    },
-    {
-      id: 'race',
-      name: 'Tech + Kerala Amazing Race',
-      spreadsheetId: '1_RImFF1I_3aBldU06RR-Jxvq9AqXUUtCIRMAgZdz7Q4',
-      gid: '73551945'
     },
     {
       id: 'pookolam',
       name: 'Digital Pookolam',
       spreadsheetId: '1d33fXEZ25AZamBk73nKugax2BIq1vGQJvse6wgYHWSg',
       gid: '994385083'
+    },
+    {
+      id: 'webcraft',
+      name: 'WebCraft AI: 90-Min Blitz',
+      spreadsheetId: '1q2RLe4_kcx8Nia_1bW6nmyqSjyvgQCw-Xa1fRrq0YhQ',
+      gid: '912982728'
+    },
+    {
+      id: 'cricbid',
+      name: 'CricBid: The IPL Mega Auction',
+      spreadsheetId: '1_RImFF1I_3aBldU06RR-Jxvq9AqXUUtCIRMAgZdz7Q4',
+      gid: '73551945'
     }
   ],
 
